@@ -1,0 +1,210 @@
+<resources>
+    <string name="app_name">Wayanad</string>
+    <string name="searchNote">Search for voter or the family based on House no, Serial no or EPIC no</string>
+    <string name="updateNote">Please Click on the voter’s name to add/ edit details about voters</string>
+    <string name="communityNote">Please select social group/ community of the family</string>
+    <string name="forwardNote">Please select community of the family (FCH)</string>
+    <string name="obcNote">Please select community of the family (OBC)</string>
+    <string name="scNote">Please select community of the family (SC)</string>
+    <string name="stNote">Please select community of the family (ST)</string>
+    <string name="christNote">Please select community of the family (Christians)</string>
+    <string name="muslimNote">Please select community of the family (Muslims)</string>
+    <string name="otherNote">Please select community of the family (Others)</string>
+    <string name="searchVoterEdittext">Seacrh</string>
+    <string name="searchVoterButtontext">Get Details</string>
+    <string name="voterDetailsButtontext">Update Family Details</string>
+    <string name="selectHeadText">Please select the Head of Family</string>
+    <string name="otherCaste">Please add here</string>
+    <string name="rationCard">Type of Ration Card</string>
+    <string name="landHolding">Total Land Holding of the Family</string>
+    <string name="ration1">1. APL</string>
+    <string name="ration2">2. BPL</string>
+    <string name="ration3">3. Antodaya</string>
+    <string name="landEditext">Land Holding (acres)</string>
+    <string name="voterButton1">1. None</string>
+    <string name="voterButton2">2. Please Add</string>
+    <string name="voterText">15–18 year olds in the Family</string>
+    <string name="voterName">Name</string>
+    <string name="voterDOB">Date of Birth</string>
+    <string name="voterMobile">Mobile</string>
+    <string name="residenceText">Does the voter live here?</string>
+    <string name="residenceButton1">Yes</string>
+    <string name="residenceButton2">No</string>
+    <string name="residence">Current Residence</string>
+    <string name="residenceDOB">Date of Birth</string>
+    <string name="residenceAnni">Anniversary(if Married)</string>
+    <string name="residenceMobile">Mobile Number</string>
+    <string name="residenceWhatsapp">Whatsapp Number</string>
+    <string name="eduText">Education</string>
+    <string name="occuText">Occupation</string>
+    <string name="liveliText">Main source of livelihood for the family</string>
+    <string name="politicalText">Political Affinity of the family</string>
+    <string name="newVoterButton">Add New Voter</string>
+    <string name="uploadButton">Upload Data</string>
+
+    <array name="gender">
+        <item>Gender</item>
+        <item>Male</item>
+        <item>Female</item>
+        <item>Other</item>
+    </array>
+
+    <array name="education">
+        <item>Non Literate</item>
+        <item>Literate</item>
+        <item>Primary</item>
+        <item>10th pass</item>
+        <item>12th pass</item>
+        <item>Graduate</item>
+        <item>Professional Degree/ PG</item>
+
+    </array>
+    <array name="political">
+        <item>UDF</item>
+        <item>LDF</item>
+        <item>BJP</item>
+        <item>Others</item>
+        <item>Nuteral</item>
+    </array>
+    <array name="occupation">
+        <item>Unemployed</item>
+        <item>General Labour</item>
+        <item>Landless Agricultural Labour</item>
+        <item>Industrial Labour</item>
+
+        <item>Street Vendor</item>
+        <item>Home Maker</item>
+        <item>Micro Industry</item>
+        <item>Student</item>
+
+        <item>Farmer</item>
+        <item>Retired</item>
+        <item>Small Business</item>
+        <item>Private job</item>
+        <item>Govt Service</item>
+        <item>Large business</item>
+        <item>Professional</item>
+        <item>Others</item>
+
+
+    </array>
+    <array name="livelihood">
+        <item>General Labour</item>
+        <item>Landless Agricultural Labour</item>
+        <item>Industrial Labour</item>
+        <item>Street Vendor</item>
+        <item>Micro Industry</item>
+        <item>Farmer</item>
+        <item>Retired</item>
+        <item>Small Business</item>
+        <item>Private job</item>
+        <item>Govt Service</item>
+        <item>Large business</item>
+        <item>Professional</item>
+        <item>Others</item>
+
+
+    </array>
+
+    <array name="forwardCaste">
+        <item>1. Brahmin</item>
+        <item>2. Nair</item>
+        <item>3. Pothuval</item>
+        <item>4. Kurup</item>
+        <item>5. Menon</item>
+        <item>6. Pillai</item>
+        <item>7. Kaimal</item>
+        <item>8. Unnithan</item>
+        <item>9. Unni</item>
+        <item>10. Warrier</item>
+        <item>11. Nambeesan</item>
+        <item>12. Chakyar</item>
+        <item>13. Nedungadi</item>
+        <item>14. Ilayathu</item>
+        <item>15. Mootthathu</item>
+        <item>16. Moosat</item>
+        <item>17. Other UCH</item>
+    </array>
+    <array name="backwardCaste">
+        <item>21. Ezhavas</item>
+        <item>22. Thiya</item>
+        <item>23. Chetties</item>
+        <item>24. Viswakaramas</item>
+        <item>25. Yadavas</item>
+        <item>26. Veerasaivas</item>
+        <item>27. Moopar</item>
+        <item>28. SC Christians</item>
+        <item>29. Chaliyas</item>
+        <item>30. Vanian</item>
+        <item>31. Boyan</item>
+        <item>32. Ganjan Reddis</item>
+        <item>33. Visanavan</item>
+        <item>34. Other OBC</item>
+    </array>
+    <array name="scCaste">
+        <item>41. Paniyan </item>
+        <item>42. Kurichchan</item>
+        <item>43. Muthuvan</item>
+        <item>44. Kanikaran</item>
+        <item>45. Irular</item>
+        <item>46. Kurumans</item>
+        <item>47. Marati</item>
+        <item>48. Malai Arayan</item>
+        <item>49. Malayan</item>
+        <item>50. Malai Vedan</item>
+        <item>51. Mannan</item>
+        <item>52. Other SC</item>
+    </array>
+    <array name="stCaste">
+        <item>61. Paniyan</item>
+        <item>62. Kurichchan</item>
+        <item>63. Muthuvan</item>
+        <item>64. Kanikaran</item>
+        <item>65. Irular</item>
+        <item>66. Kuruman</item>
+        <item>67. Marati</item>
+        <item>68. Malai Arayan</item>
+        <item>69. Other ST</item>
+    </array>
+    <array name="christianCaste">
+        <item>71. Syrian Christian</item>
+        <item>72. Catholic Christian</item>
+        <item>73. Jacobites</item>
+        <item>74. OBC Christians</item>
+        <item>75. Other Christian</item>
+    </array>
+    <array name="muslimCaste">
+        <item>81. Gen Muslim</item>
+        <item>82. OBC Muslims</item>
+        <item>83. Other Muslims</item>
+    </array>
+    <array name="minorityCaste">
+        <item>91. Jains</item>
+        <item>92. Buddhists</item>
+        <item>93. Others</item>
+    </array>
+    <array name="community">
+        <item>Forward- Hindu</item>
+        <item>OBCs</item>
+        <item>Scheduled Castes</item>
+        <item>Scheduled Tribes</item>
+        <item>Christians</item>
+        <item>Muslims</item>
+        <item>Others</item>
+    </array>
+
+    <array name="ration">
+        <item>1. APL</item>
+        <item>2. BPL</item>
+        <item>3. Antodaya</item>
+    </array>
+    <array name="newvoter">
+        <item>None</item>
+        <item>Add</item>
+    </array>
+
+
+
+
+
+</resources>
