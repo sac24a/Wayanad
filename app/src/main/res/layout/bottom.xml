@@ -6,21 +6,29 @@
     >
 
     <Button
-        android:layout_width="50dp"
+        android:layout_width="100dp"
         android:layout_height="50dp"
-        android:background="@drawable/ic_baseline_arrow_back_24"
         android:id="@+id/backward"
         android:layout_marginLeft="30dp"
         android:onClick="backPressed"
+        android:text="@string/backButton"
+        android:textSize="20dp"
+        android:textAllCaps="false"
+        android:background="@drawable/newsample"
+        android:textColor="#ffffff"
         />
     <Button
-        android:layout_width="50dp"
+        android:layout_width="100dp"
         android:layout_height="50dp"
-        android:background="@drawable/ic_baseline_arrow_forward_24"
         android:layout_alignParentRight="true"
         android:id="@+id/forward"
         android:layout_marginRight="30dp"
         android:onClick="forwardPressed"
+        android:text="@string/nextButton"
+        android:textSize="20dp"
+        android:textAllCaps="false"
+        android:background="@drawable/newsample"
+        android:textColor="#ffffff"
 
         />
 

@@ -11,6 +11,7 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.CheckedTextView;
 import android.widget.ListView;
+import android.widget.TextView;
 
 import com.candlestickschart.wayanad.databinding.ActivityCommunityBinding;
 import com.candlestickschart.wayanad.databinding.ActivityNewVoterBinding;
@@ -28,6 +29,7 @@ public class NewVoter extends AppCompatActivity {
     List<String> religionName = new ArrayList<>();
     ListView listView;
     SharedPreferences sharedPreferences;
+    TextView textView;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -39,6 +41,8 @@ public class NewVoter extends AppCompatActivity {
         searchVoterBinding.setMainUser(user);
 
         listView = findViewById(R.id.listView);
+        textView = findViewById(R.id.clickNext);
+        textView.setVisibility(View.GONE);
 
     }
 
@@ -54,12 +58,20 @@ public class NewVoter extends AppCompatActivity {
                     AppExecutors.getInstance().mainThread().execute(new Runnable() {
                         @Override
                         public void run() {
+                            textView.setVisibility(View.GONE);
                             ArrayAdapter<String> itemsAdapter =
                                     new ArrayAdapter<String>(NewVoter.this, android.R.layout.simple_list_item_1, religionName);
                             listView.setAdapter(itemsAdapter);
                         }
                     });
-
+                }
+                else {
+                    AppExecutors.getInstance().mainThread().execute(new Runnable() {
+                        @Override
+                        public void run() {
+                            textView.setVisibility(View.VISIBLE);
+                        }
+                    });
                 }
             }
         });

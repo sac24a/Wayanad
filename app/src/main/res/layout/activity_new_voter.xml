@@ -39,6 +39,20 @@
             android:layout_above="@id/bottomLay"
             android:layout_marginTop="20dp"/>
 
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textColor="#000"
+            android:text="Click Next to Add New Voter"
+            android:id="@+id/clickNext"
+            android:layout_marginTop="20dp"
+            android:textSize="20dp"
+            android:textStyle="bold"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp"
+            android:gravity="center"
+            android:layout_centerInParent="true"
+            />
 
         <include layout="@layout/bottom"
             android:id="@+id/bottomLay"

@@ -41,6 +41,8 @@
     <string name="politicalText">Political Affinity of the family</string>
     <string name="newVoterButton">Add New Voter</string>
     <string name="uploadButton">Upload Data</string>
+    <string name="backButton">&lt; Back</string>
+    <string name="nextButton">Next &gt;</string>
 
     <array name="gender">
         <item>Gender</item>
