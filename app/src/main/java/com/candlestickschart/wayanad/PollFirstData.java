@@ -59,7 +59,6 @@ public class PollFirstData {
     public String DOB;
     @ColumnInfo(name = "MOBILE_NO")
     public String MOBILE_NO;
-
     @ColumnInfo(name = "Family_Head")
     public String Family_Head;
     @ColumnInfo(name = "Social_Group")

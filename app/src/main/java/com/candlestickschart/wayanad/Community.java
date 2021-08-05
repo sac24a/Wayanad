@@ -12,6 +12,7 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.CheckedTextView;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import com.candlestickschart.wayanad.databinding.ActivityCommunityBinding;
 import com.candlestickschart.wayanad.databinding.ActivityFamilyHeadBinding;
@@ -20,6 +21,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class Community extends AppCompatActivity {
 
@@ -57,7 +59,40 @@ public class Community extends AppCompatActivity {
 
             }
         });
+        setData();
 
+    }
+    public void setData() {
+        AppExecutors.getInstance().diskIO().execute(new Runnable() {
+            @Override
+            public void run() {
+                PollFirstDataBase pollFirstDataBase = PollFirstDataBase.getInstance(Community.this);
+                ArrayList<VoterListData> voterData = getIntent().getParcelableArrayListExtra("voterdata");
+                for (int i = 0; i < voterData.size(); i++) {
+                    List<VoterListData> voterDetails = pollFirstDataBase.pollFirstDao().getVoterDetails(voterData.get(i).Voter_ID);
+                    AppExecutors.getInstance().mainThread().execute(new Runnable() {
+                        @Override
+                        public void run() {
+
+                            if (!voterDetails.get(0).Segment.equals("null")) {
+                                String[] array = getResources().getStringArray(R.array.community);
+                                for (int i=0;i<array.length;i++) {
+                                    if (array[i].equals(voterDetails.get(0).Segment)) {
+                                        listView.setItemChecked(i,true);
+                                        try {
+                                            community = voterDetails.get(0).Segment;
+                                            jsonObject.put("Social_Group",community);
+                                        } catch (JSONException e) {
+                                            e.printStackTrace();
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    });
+                }
+            }
+        });
     }
 
     public void backPressed(View view) {
@@ -65,6 +100,10 @@ public class Community extends AppCompatActivity {
     }
     public void forwardPressed (View view){
         try {
+            if (community.equals("")) {
+                Toast.makeText(Community.this,"Select Community",Toast.LENGTH_SHORT).show();
+                return;
+            }
             jsonObject.put("Social_Group",community);
             Intent intent = new Intent(this,Cast.class);
             intent.putExtra("voterlist",getIntent().getStringArrayListExtra("voterlist"));

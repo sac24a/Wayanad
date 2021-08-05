@@ -12,6 +12,7 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.CheckedTextView;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import com.candlestickschart.wayanad.databinding.ActivityCommunityBinding;
 import com.candlestickschart.wayanad.databinding.ActivityOccupationBinding;
@@ -20,6 +21,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class Occupation extends AppCompatActivity {
 
@@ -36,11 +38,7 @@ public class Occupation extends AppCompatActivity {
         sharedPreferences = getSharedPreferences("login",MODE_PRIVATE);
         User user = new User(sharedPreferences.getString("name",""),sharedPreferences.getString("vs_no","")+"-"+sharedPreferences.getString("vs_name",""),sharedPreferences.getString("booth_no","")+"-"+sharedPreferences.getString("booth_name",""),sharedPreferences.getString("search",""));
         searchVoterBinding.setMainUser(user);
-
         listView = findViewById(R.id.listView);
-
-
-
         try {
             jsonObject = new JSONObject(getIntent().getStringExtra("json"));
         } catch (JSONException e) {
@@ -65,7 +63,38 @@ public class Occupation extends AppCompatActivity {
                 }
             }
         });
+        setData();
+    }
+    public void setData() {
+        AppExecutors.getInstance().diskIO().execute(new Runnable() {
+            @Override
+            public void run() {
+                PollFirstDataBase pollFirstDataBase = PollFirstDataBase.getInstance(Occupation.this);
+                ArrayList<VoterListData> voterData = getIntent().getParcelableArrayListExtra("voterdata");
+                for (int i = 0; i < voterData.size(); i++) {
+                    List<VoterListData> voterDetails = pollFirstDataBase.pollFirstDao().getVoterDetails(voterData.get(i).Voter_ID);
+                    AppExecutors.getInstance().mainThread().execute(new Runnable() {
+                        @Override
+                        public void run() {
 
+                            if (!voterDetails.get(0).Occupation.equals("null")) {
+                                String[] array = getResources().getStringArray(R.array.occupation);
+                                for (int i=0;i<array.length;i++) {
+                                    if (array[i].equals(voterDetails.get(0).Occupation)) {
+                                        listView.setItemChecked(i,true);
+                                        try {
+                                            jsonObject.put("Voter_OCCU",voterDetails.get(0).Occupation);
+                                        } catch (JSONException e) {
+                                            e.printStackTrace();
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    });
+                }
+            }
+        });
     }
 
     public void backPressed(View view) {
@@ -73,12 +102,16 @@ public class Occupation extends AppCompatActivity {
     }
     public void forwardPressed (View view){
         try {
+            if (!jsonObject.has("Voter_OCCU")) {
+                Toast.makeText(Occupation.this,"Select Occupation",Toast.LENGTH_SHORT).show();
+                return;
+            }
             AppExecutors.getInstance().diskIO().execute(new Runnable() {
                 @Override
                 public void run() {
                     try {
                         PollFirstDataBase pollFirstDataBase = PollFirstDataBase.getInstance(Occupation.this);
-                        pollFirstDataBase.pollFirstDao().updateVoterIndividual(jsonObject.getString("Voter_Place"),jsonObject.getString("Current_Residence"),jsonObject.getString("Voter_DOB"),jsonObject.getString("Voter_Anniversary"),jsonObject.getString("Voter_Mobile"),jsonObject.getString("Voter_Whatsapp"),jsonObject.getString("Voter_EDU"),jsonObject.getString("Voter_OCCU"),jsonObject.getString("EPIC_NO"));
+                        pollFirstDataBase.pollFirstDao().updateVoterIndividual(jsonObject.getString("Voter_Place"),jsonObject.getString("Current_Residence"),jsonObject.getString("Voter_DOB"),jsonObject.getString("Voter_Anniversary"),jsonObject.getString("Voter_Mobile"),jsonObject.getString("Voter_EDU"),jsonObject.getString("Voter_OCCU"),jsonObject.getString("EPIC_NO"));
                         Intent intent = new Intent(Occupation.this, VoterDetails.class);
                         intent.putExtra("voterlist",getIntent().getStringArrayListExtra("voterlist"));
                         intent.putExtra("voterdata",getIntent().getParcelableArrayListExtra("voterdata"));
@@ -88,7 +121,7 @@ public class Occupation extends AppCompatActivity {
 
                     }
                     catch (Exception e ) {
-
+                        e.printStackTrace();
                     }
                 }
             });

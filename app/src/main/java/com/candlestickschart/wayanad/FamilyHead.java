@@ -11,6 +11,7 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.CheckedTextView;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import com.candlestickschart.wayanad.databinding.ActivityCommunityBinding;
 import com.candlestickschart.wayanad.databinding.ActivityFamilyHeadBinding;
@@ -20,6 +21,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class FamilyHead extends AppCompatActivity {
 
@@ -52,6 +54,38 @@ public class FamilyHead extends AppCompatActivity {
                 community = ((CheckedTextView) view).getText().toString();
             }
         });
+        setData(arrayList);
+    }
+    public void setData(ArrayList<String>array) {
+        AppExecutors.getInstance().diskIO().execute(new Runnable() {
+            @Override
+            public void run() {
+                PollFirstDataBase pollFirstDataBase = PollFirstDataBase.getInstance(FamilyHead.this);
+                ArrayList<VoterListData> voterData = getIntent().getParcelableArrayListExtra("voterdata");
+                for (int i = 0; i < voterData.size(); i++) {
+                    List<VoterListData> voterDetails = pollFirstDataBase.pollFirstDao().getVoterDetails(voterData.get(i).Voter_ID);
+                    AppExecutors.getInstance().mainThread().execute(new Runnable() {
+                        @Override
+                        public void run() {
+
+                            if (!voterDetails.get(0).HOF.equals("null")) {
+                                for (int i=0;i<array.size();i++) {
+                                    if (array.get(i).equals(voterDetails.get(0).HOF)) {
+                                        listView.setItemChecked(i,true);
+                                        try {
+                                            community = voterDetails.get(0).HOF;
+                                            jsonObject.put("Family_Head",community);
+                                        } catch (JSONException e) {
+                                            e.printStackTrace();
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    });
+                }
+            }
+        });
     }
 
     public void backPressed(View view) {
@@ -59,6 +93,10 @@ public class FamilyHead extends AppCompatActivity {
     }
     public void forwardPressed (View view){
         try {
+            if (community.equals("")) {
+                Toast.makeText(FamilyHead.this,"Select Family Head",Toast.LENGTH_SHORT).show();
+                return;
+            }
             jsonObject.put("Family_Head",community);
             jsonObject.put("C_HOUSE_NO",getIntent().getStringExtra("C_HOUSE_NO"));
             Intent intent = new Intent(this,Community.class);

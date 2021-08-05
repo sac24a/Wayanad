@@ -1,56 +1,10 @@
 <resources>
-    <string name="app_name">Wayanad</string>
-    <string name="searchNote">Search for voter or the family based on House no, Serial no or EPIC no</string>
-    <string name="updateNote">Please Click on the voter’s name to add/ edit details about voters</string>
-    <string name="communityNote">Please select social group/ community of the family</string>
-    <string name="forwardNote">Please select community of the family (FCH)</string>
-    <string name="obcNote">Please select community of the family (OBC)</string>
-    <string name="scNote">Please select community of the family (SC)</string>
-    <string name="stNote">Please select community of the family (ST)</string>
-    <string name="christNote">Please select community of the family (Christians)</string>
-    <string name="muslimNote">Please select community of the family (Muslims)</string>
-    <string name="otherNote">Please select community of the family (Others)</string>
-    <string name="searchVoterEdittext">Seacrh</string>
-    <string name="searchVoterButtontext">Get Details</string>
-    <string name="voterDetailsButtontext">Update Family Details</string>
-    <string name="selectHeadText">Please select the Head of Family</string>
-    <string name="otherCaste">Please add here</string>
-    <string name="rationCard">Type of Ration Card</string>
-    <string name="landHolding">Total Land Holding of the Family</string>
-    <string name="ration1">1. APL</string>
-    <string name="ration2">2. BPL</string>
-    <string name="ration3">3. Antodaya</string>
-    <string name="landEditext">Land Holding (acres)</string>
-    <string name="voterButton1">1. None</string>
-    <string name="voterButton2">2. Please Add</string>
-    <string name="voterText">15–18 year olds in the Family</string>
-    <string name="voterName">Name</string>
-    <string name="voterDOB">Date of Birth</string>
-    <string name="voterMobile">Mobile</string>
-    <string name="residenceText">Does the voter live here?</string>
-    <string name="residenceButton1">Yes</string>
-    <string name="residenceButton2">No</string>
-    <string name="residence">Current Residence</string>
-    <string name="residenceDOB">Date of Birth</string>
-    <string name="residenceAnni">Anniversary(if Married)</string>
-    <string name="residenceMobile">Mobile Number</string>
-    <string name="residenceWhatsapp">Whatsapp Number</string>
-    <string name="eduText">Education</string>
-    <string name="occuText">Occupation</string>
-    <string name="liveliText">Main source of livelihood for the family</string>
-    <string name="politicalText">Political Affinity of the family</string>
-    <string name="newVoterButton">Add New Voter</string>
-    <string name="uploadButton">Upload Data</string>
-    <string name="backButton">&lt; Back</string>
-    <string name="nextButton">Next &gt;</string>
-
     <array name="gender">
         <item>Gender</item>
         <item>Male</item>
         <item>Female</item>
         <item>Other</item>
     </array>
-
     <array name="education">
         <item>Non Literate</item>
         <item>Literate</item>
@@ -107,7 +61,6 @@
 
 
     </array>
-
     <array name="forwardCaste">
         <item>1. Brahmin</item>
         <item>2. Nair</item>
@@ -144,7 +97,7 @@
         <item>34. Other OBC</item>
     </array>
     <array name="scCaste">
-        <item>41. Paniyan </item>
+        <item>41. Paniyan</item>
         <item>42. Kurichchan</item>
         <item>43. Muthuvan</item>
         <item>44. Kanikaran</item>
@@ -194,7 +147,6 @@
         <item>Muslims</item>
         <item>Others</item>
     </array>
-
     <array name="ration">
         <item>1. APL</item>
         <item>2. BPL</item>
@@ -204,9 +156,61 @@
         <item>None</item>
         <item>Add</item>
     </array>
+    <array name="acno">
+        <item>Select AC NO</item>
+    </array>
+    <array name="boothno">
+        <item>Select Booth NO</item>
+    </array>
+    <string name="downloadBtn">Download Voter List</string>
+    <string name="app_name">Wayanad</string>
+    <string name="searchNote">Search for voter or the family based on House no, Serial no or EPIC no</string>
+    <string name="updateNote">Please Click on the voter’s name to add/ edit details about voters</string>
+    <string name="communityNote">Please select social group/ community of the family</string>
+    <string name="forwardNote">Please select community of the family (FCH)</string>
+    <string name="obcNote">Please select community of the family (OBC)</string>
+    <string name="scNote">Please select community of the family (SC)</string>
+    <string name="stNote">Please select community of the family (ST)</string>
+    <string name="christNote">Please select community of the family (Christians)</string>
+    <string name="muslimNote">Please select community of the family (Muslims)</string>
+    <string name="otherNote">Please select community of the family (Others)</string>
+    <string name="searchVoterEdittext">Seacrh</string>
+    <string name="searchVoterButtontext">Get Details</string>
+    <string name="voterDetailsButtontext">Update Family Details</string>
+    <string name="selectHeadText">Please select the Head of Family</string>
+    <string name="otherCaste">Please add here</string>
+    <string name="rationCard">Type of Ration Card</string>
+    <string name="landHolding">Total Land Holding of the Family</string>
+    <string name="ration1">1. APL</string>
+    <string name="ration2">2. BPL</string>
+    <string name="ration3">3. Antodaya</string>
+    <string name="landEditext">Land Holding (acres)</string>
+    <string name="voterButton1">1. None</string>
+    <string name="voterButton2">2. Please Add</string>
+    <string name="voterText">15–18 year olds in the Family</string>
+    <string name="voterName">Name</string>
+    <string name="voterDOB">Date of Birth</string>
+    <string name="voterMobile">Mobile</string>
+    <string name="residenceText">Does the voter live here?</string>
 
+    <string name="residenceButton1">Yes</string>
 
+    <string name="residenceButton2">No</string>
+    <string name="residence">Current Residence</string>
+    <string name="residenceDOB">Date of Birth</string>
+    <string name="residenceAnni">Anniversary(if Married)</string>
 
+    <string name="residenceMobile">Mobile Number</string>
+    <string name="residenceWhatsapp">Whatsapp Number</string>
+    <string name="eduText">Education</string>
+    <string name="occuText">Occupation</string>
+    <string name="liveliText">Main source of livelihood for the family</string>
+    <string name="politicalText">Political Affinity of the family</string>
+    <string name="newVoterButton">Add New Voter</string>
+    <string name="uploadButton">Upload Data</string>
+
+    <string name="backButton">&lt; Back</string>
+    <string name="nextButton">Next &gt;</string>
 
 
 </resources>

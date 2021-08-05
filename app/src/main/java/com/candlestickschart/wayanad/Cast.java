@@ -11,6 +11,7 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.CheckedTextView;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import com.candlestickschart.wayanad.databinding.ActivityCastBinding;
 import com.candlestickschart.wayanad.databinding.ActivityFamilyHeadBinding;
@@ -19,6 +20,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class Cast extends AppCompatActivity {
 
@@ -82,12 +84,48 @@ public class Cast extends AppCompatActivity {
 
             }
         });
+        setData(array);
+    }
+    public void setData(String[]array) {
+        AppExecutors.getInstance().diskIO().execute(new Runnable() {
+            @Override
+            public void run() {
+                PollFirstDataBase pollFirstDataBase = PollFirstDataBase.getInstance(Cast.this);
+                ArrayList<VoterListData> voterData = getIntent().getParcelableArrayListExtra("voterdata");
+                for (int i = 0; i < voterData.size(); i++) {
+                    List<VoterListData> voterDetails = pollFirstDataBase.pollFirstDao().getVoterDetails(voterData.get(i).Voter_ID);
+                    AppExecutors.getInstance().mainThread().execute(new Runnable() {
+                        @Override
+                        public void run() {
+
+                            if (!voterDetails.get(0).Community.equals("null")) {
+                                for (int i=0;i<array.length;i++) {
+                                    if (array[i].equals(voterDetails.get(0).Community)) {
+                                        listView.setItemChecked(i,true);
+                                        try {
+                                            community = voterDetails.get(0).Community;
+                                            jsonObject.put("Caste",community);
+                                        } catch (JSONException e) {
+                                            e.printStackTrace();
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    });
+                }
+            }
+        });
     }
     public void backPressed(View view) {
         finish();
     }
     public void forwardPressed (View view){
         try {
+            if (community.equals("")) {
+                Toast.makeText(Cast.this,"Select Cast",Toast.LENGTH_SHORT).show();
+                return;
+            }
             jsonObject.put("Caste",community);
             Intent intent = new Intent(this,Economic.class);
             intent.putExtra("voterdata",getIntent().getParcelableArrayListExtra("voterdata"));

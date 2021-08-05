@@ -8,6 +8,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.ArrayAdapter;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ShareActionProvider;
@@ -68,7 +69,27 @@ public class NewVoterDetail extends AppCompatActivity {
                         myCalendar.get(Calendar.DAY_OF_MONTH)).show();
             }
         });
+        if (getIntent().getStringExtra("type").equals("update")) {
+            setData();
+        }
+    }
 
+    public void setData() {
+        AppExecutors.getInstance().diskIO().execute(new Runnable() {
+            @Override
+            public void run() {
+                PollFirstDataBase pollFirstDataBase = PollFirstDataBase.getInstance(NewVoterDetail.this);
+                List<NewVoterData>newVoterData = pollFirstDataBase.pollFirstDao().getNewVoterById(getIntent().getIntExtra("id",0));
+                AppExecutors.getInstance().mainThread().execute(new Runnable() {
+                    @Override
+                    public void run() {
+                        name.setText(newVoterData.get(0).New_Name);
+                        mobile.setText(newVoterData.get(0).New_Mobile);
+                        dob.setText(newVoterData.get(0).New_DOB);
+                    }
+                });
+            }
+        });
     }
     private void updateLabel() {
         String myFormat = "MM/dd/yy"; //In which you need put here
@@ -82,14 +103,44 @@ public class NewVoterDetail extends AppCompatActivity {
     }
     public void forwardPressed (View view){
         try {
+            if (name.getText().toString().equals("")) {
+                Toast.makeText(NewVoterDetail.this,"Enter Name",Toast.LENGTH_SHORT).show();
+                return;
+            }
+            if (gender.getSelectedItem().toString().equals("Gender")) {
+                Toast.makeText(NewVoterDetail.this,"Select Gender",Toast.LENGTH_SHORT).show();
+                return;
+            }
+            if (dob.getText().toString().equals("")) {
+                Toast.makeText(NewVoterDetail.this,"Enter DOB",Toast.LENGTH_SHORT).show();
+                return;
+            }
+            if (mobile.getText().toString().equals("")) {
+                Toast.makeText(NewVoterDetail.this,"Enter Mobile",Toast.LENGTH_SHORT).show();
+                return;
+            }
+            if (mobile.getText().toString().length()<10) {
+                Toast.makeText(NewVoterDetail.this,"Invalid Mobile",Toast.LENGTH_SHORT).show();
+                return;
+            }
             AppExecutors.getInstance().diskIO().execute(new Runnable() {
                 @Override
                 public void run() {
                     try {
-                        PollFirstDataBase pollFirstDataBase = PollFirstDataBase.getInstance(NewVoterDetail.this);
-                        NewVoterData pollFirstData = new NewVoterData(getIntent().getStringExtra("C_HOUSE_NO"),name.getText().toString(),gender.getSelectedItem().toString(),dob.getText().toString(),mobile.getText().toString());
-                        pollFirstDataBase.pollFirstDao().insertNewVoter(pollFirstData);
-                        finish();
+
+                            PollFirstDataBase pollFirstDataBase = PollFirstDataBase.getInstance(NewVoterDetail.this);
+                            if (getIntent().getStringExtra("type").equals("update")) {
+                                pollFirstDataBase.pollFirstDao().updateNewVoterById(name.getText().toString(),gender.getSelectedItem().toString(),dob.getText().toString(),mobile.getText().toString(),getIntent().getIntExtra("id",0));
+                                finish();
+                            }
+                            else {
+                                NewVoterData pollFirstData = new NewVoterData(getIntent().getStringExtra("C_HOUSE_NO"),name.getText().toString(),gender.getSelectedItem().toString(),dob.getText().toString(),mobile.getText().toString(),sharedPreferences.getString("booth",""));
+                                pollFirstDataBase.pollFirstDao().insertNewVoter(pollFirstData);
+                                finish();
+                            }
+
+
+
                     }
                     catch (Exception e ) {
 

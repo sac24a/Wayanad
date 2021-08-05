@@ -30,6 +30,7 @@ public class VoterDetails extends AppCompatActivity {
     Button newVoterButton;
     JSONObject jsonObject;
     SharedPreferences sharedPreferences;
+    String status = "";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,7 +47,7 @@ public class VoterDetails extends AppCompatActivity {
         jsonObject = new JSONObject();
 
         ArrayList<String > arrayList = getIntent().getStringArrayListExtra("voterlist");
-        ArrayList<VoterData > voterData = getIntent().getParcelableArrayListExtra("voterdata");
+        ArrayList<VoterListData > voterData = getIntent().getParcelableArrayListExtra("voterdata");
         ArrayAdapter adapter = new ArrayAdapter<String>(this,
                 android.R.layout.simple_list_item_checked, arrayList);
         listView.setAdapter(adapter);
@@ -57,7 +58,7 @@ public class VoterDetails extends AppCompatActivity {
                 Intent intent = new Intent(VoterDetails.this,IndividualDetail.class);
                 intent.putExtra("voterdata",voterData);
                 intent.putExtra("voterlist",getIntent().getStringArrayListExtra("voterlist"));
-                intent.putExtra("EPIC_NO",voterData.get(i).EPIC_NO);
+                intent.putExtra("EPIC_NO",voterData.get(i).Voter_ID);
                 startActivity(intent);
             }
         });
@@ -65,9 +66,10 @@ public class VoterDetails extends AppCompatActivity {
         updateButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+
                 Intent intent = new Intent(VoterDetails.this,FamilyHead.class);
                 intent.putExtra("voterdata",voterData);
-                intent.putExtra("C_HOUSE_NO",voterData.get(0).C_HOUSE_NO);
+                intent.putExtra("C_HOUSE_NO",voterData.get(0).Fam_ID);
                 intent.putExtra("voterlist",getIntent().getStringArrayListExtra("voterlist"));
                 startActivity(intent);
             }
@@ -79,7 +81,7 @@ public class VoterDetails extends AppCompatActivity {
                 Intent intent = new Intent(VoterDetails.this,NewVoter.class);
                 intent.putExtra("voterdata",voterData);
                 intent.putExtra("voterlist",getIntent().getStringArrayListExtra("voterlist"));
-                intent.putExtra("C_HOUSE_NO",voterData.get(0).C_HOUSE_NO);
+                intent.putExtra("C_HOUSE_NO",voterData.get(0).Fam_ID);
                 startActivity(intent);
             }
         });
@@ -92,18 +94,21 @@ public class VoterDetails extends AppCompatActivity {
             @Override
             public void run() {
                 PollFirstDataBase pollFirstDataBase = PollFirstDataBase.getInstance(VoterDetails.this);
-                ArrayList<VoterData > voterData = getIntent().getParcelableArrayListExtra("voterdata");
+                ArrayList<VoterListData > voterData = getIntent().getParcelableArrayListExtra("voterdata");
                 for (int i=0; i< voterData.size();i++) {
-                    List<String> educstatus = pollFirstDataBase.pollFirstDao().checkVoterOCCUStatus(voterData.get(i).EPIC_NO);
+                    List<String> educstatus = pollFirstDataBase.pollFirstDao().checkVoterOCCUStatus(voterData.get(i).Voter_ID);
+                    Log.d("TAG", "run: "+educstatus.get(0));
                     int finalI = i;
                     AppExecutors.getInstance().mainThread().execute(new Runnable() {
                         @Override
                         public void run() {
-                            if (!educstatus.get(0).equals("")) {
+                            if (!educstatus.get(0).equals("null")) {
                                 listView.setItemChecked(finalI,true);
                             }
                             else {
                                 listView.setItemChecked(finalI,false);
+                                updateButton.setEnabled(false);
+                                status = "pending";
                             }
 
                         }

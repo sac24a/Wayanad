@@ -20,31 +20,37 @@ public class NewVoterData {
     public String New_DOB;
     @ColumnInfo(name = "New_Mobile")
     public String New_Mobile;
+    @ColumnInfo(name = "Booth_no")
+    public String Booth_no;
 
     public NewVoterData(int id,
                          String C_HOUSE_NO,
                          String New_Name,
                          String New_Gender,
                          String New_DOB,
-                         String New_Mobile){
+                         String New_Mobile,
+                        String Booth_no){
         this.id = id;
         this.C_HOUSE_NO = C_HOUSE_NO;
         this.New_DOB = New_DOB;
         this.New_Gender = New_Gender;
         this.New_Name = New_Name;
         this.New_Mobile = New_Mobile;
+        this.Booth_no = Booth_no;
     }
     @Ignore
     public NewVoterData(String C_HOUSE_NO,
                          String New_Name,
                          String New_Gender,
                          String New_DOB,
-                         String New_Mobile){
+                         String New_Mobile,
+                        String Booth_no){
         this.C_HOUSE_NO = C_HOUSE_NO;
         this.New_DOB = New_DOB;
         this.New_Gender = New_Gender;
         this.New_Name = New_Name;
         this.New_Mobile = New_Mobile;
+        this.Booth_no = Booth_no;
 
     }
 }

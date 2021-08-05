@@ -13,6 +13,7 @@ import android.widget.ArrayAdapter;
 import android.widget.CheckedTextView;
 import android.widget.EditText;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import com.candlestickschart.wayanad.databinding.ActivityCommunityBinding;
 import com.candlestickschart.wayanad.databinding.ActivityLivelyhoodBinding;
@@ -21,6 +22,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class Livelyhood extends AppCompatActivity {
 
@@ -62,7 +64,39 @@ public class Livelyhood extends AppCompatActivity {
 
             }
         });
+        setData();
+    }
+    public void setData() {
+        AppExecutors.getInstance().diskIO().execute(new Runnable() {
+            @Override
+            public void run() {
+                PollFirstDataBase pollFirstDataBase = PollFirstDataBase.getInstance(Livelyhood.this);
+                ArrayList<VoterListData> voterData = getIntent().getParcelableArrayListExtra("voterdata");
+                for (int i = 0; i < voterData.size(); i++) {
+                    List<VoterListData> voterDetails = pollFirstDataBase.pollFirstDao().getVoterDetails(voterData.get(i).Voter_ID);
+                    AppExecutors.getInstance().mainThread().execute(new Runnable() {
+                        @Override
+                        public void run() {
 
+                            if (!voterDetails.get(0).Livelihood.equals("null")) {
+                                String[] array = getResources().getStringArray(R.array.livelihood);
+                                for (int i=0;i<array.length;i++) {
+                                    if (array[i].equals(voterDetails.get(0).Livelihood)) {
+                                        listView.setItemChecked(i,true);
+                                        try {
+                                            community = voterDetails.get(0).Livelihood;
+                                            jsonObject.put("Source_Livelihood",community);
+                                        } catch (JSONException e) {
+                                            e.printStackTrace();
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    });
+                }
+            }
+        });
     }
 
     public void backPressed(View view) {
@@ -70,6 +104,10 @@ public class Livelyhood extends AppCompatActivity {
     }
     public void forwardPressed (View view){
         try {
+            if (community.equals("")) {
+                Toast.makeText(Livelyhood.this,"Select Livelihood",Toast.LENGTH_SHORT).show();
+                return;
+            }
             try {
                 jsonObject.put("Source_Livelihood",community);
             } catch (JSONException e) {
@@ -80,7 +118,7 @@ public class Livelyhood extends AppCompatActivity {
                 public void run() {
                     try {
                         PollFirstDataBase pollFirstDataBase = PollFirstDataBase.getInstance(Livelyhood.this);
-                        pollFirstDataBase.pollFirstDao().updateVoterDetail(jsonObject.getString("Family_Head"),jsonObject.getString("Social_Group"),jsonObject.getString("Caste"),jsonObject.getString("Ration_Card"),jsonObject.getString("Land_Holding"),jsonObject.getString("Political_Affinity"),jsonObject.getString("Source_Livelihood"),jsonObject.getString("C_HOUSE_NO"));
+                        pollFirstDataBase.pollFirstDao().updateVoterDetail(jsonObject.getString("Family_Head"),jsonObject.getString("Social_Group"),jsonObject.getString("Caste"),jsonObject.getString("Ration_Card"),jsonObject.getString("Land_Holding"),jsonObject.getString("Political_Affinity"),jsonObject.getString("Source_Livelihood"),jsonObject.getString("C_HOUSE_NO"),"completed");
                         Intent intent = new Intent(Livelyhood.this, VoterDetails.class);
                         intent.putExtra("voterlist",getIntent().getStringArrayListExtra("voterlist"));
                         intent.putExtra("voterdata",getIntent().getParcelableArrayListExtra("voterdata"));

@@ -13,6 +13,7 @@ import android.widget.ArrayAdapter;
 import android.widget.CheckedTextView;
 import android.widget.EditText;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import com.candlestickschart.wayanad.databinding.ActivityCommunityBinding;
 import com.candlestickschart.wayanad.databinding.ActivityEconomicBinding;
@@ -21,6 +22,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class Economic extends AppCompatActivity {
 
@@ -61,7 +63,43 @@ public class Economic extends AppCompatActivity {
 
             }
         });
+        setData();
+    }
+    public void setData() {
+        AppExecutors.getInstance().diskIO().execute(new Runnable() {
+            @Override
+            public void run() {
+                PollFirstDataBase pollFirstDataBase = PollFirstDataBase.getInstance(Economic.this);
+                ArrayList<VoterListData> voterData = getIntent().getParcelableArrayListExtra("voterdata");
+                for (int i = 0; i < voterData.size(); i++) {
+                    List<VoterListData> voterDetails = pollFirstDataBase.pollFirstDao().getVoterDetails(voterData.get(i).Voter_ID);
+                    AppExecutors.getInstance().mainThread().execute(new Runnable() {
+                        @Override
+                        public void run() {
 
+                            if (!voterDetails.get(0).Ration_card.equals("null")) {
+                                String[] array = getResources().getStringArray(R.array.ration);
+                                for (int i=0;i<array.length;i++) {
+                                    if (array[i].equals(voterDetails.get(0).Ration_card)) {
+                                        listView.setItemChecked(i,true);
+                                        try {
+                                            community = voterDetails.get(0).Ration_card;
+                                            jsonObject.put("Ration_Card",community);
+                                        } catch (JSONException e) {
+                                            e.printStackTrace();
+                                        }
+                                    }
+                                }
+                            }
+                            if (!voterDetails.get(0).Land_holding.equals("null")) {
+                                land.setText(voterDetails.get(0).Land_holding);
+                            }
+
+                        }
+                    });
+                }
+            }
+        });
     }
 
     public void backPressed(View view) {
@@ -69,6 +107,14 @@ public class Economic extends AppCompatActivity {
     }
     public void forwardPressed (View view){
         try {
+            if (community.equals("")) {
+                Toast.makeText(Economic.this,"Select Ration Type",Toast.LENGTH_SHORT).show();
+                return;
+            }
+            if (land.getText().toString().equals("")) {
+                Toast.makeText(Economic.this,"Enter Land Holding",Toast.LENGTH_SHORT).show();
+                return;
+            }
             jsonObject.put("Ration_Card",community);
             jsonObject.put("Land_Holding",land.getText().toString());
             Intent intent = new Intent(this,Political.class);

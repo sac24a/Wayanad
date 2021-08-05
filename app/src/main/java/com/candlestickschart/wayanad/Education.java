@@ -12,6 +12,7 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.CheckedTextView;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import com.candlestickschart.wayanad.databinding.ActivityCastBinding;
 import com.candlestickschart.wayanad.databinding.ActivityCommunityBinding;
@@ -20,7 +21,9 @@ import com.candlestickschart.wayanad.databinding.ActivityEducationBinding;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
+import java.util.List;
 
 public class Education extends AppCompatActivity {
 
@@ -62,13 +65,51 @@ public class Education extends AppCompatActivity {
 
             }
         });
+        setData();
 
+    }
+    public void setData() {
+        AppExecutors.getInstance().diskIO().execute(new Runnable() {
+            @Override
+            public void run() {
+                PollFirstDataBase pollFirstDataBase = PollFirstDataBase.getInstance(Education.this);
+                ArrayList<VoterListData> voterData = getIntent().getParcelableArrayListExtra("voterdata");
+                for (int i = 0; i < voterData.size(); i++) {
+                    List<VoterListData> voterDetails = pollFirstDataBase.pollFirstDao().getVoterDetails(voterData.get(i).Voter_ID);
+                    AppExecutors.getInstance().mainThread().execute(new Runnable() {
+                        @Override
+                        public void run() {
+
+                            if (!voterDetails.get(0).Education.equals("null")) {
+                                String[] array = getResources().getStringArray(R.array.education);
+                                for (int i=0;i<array.length;i++) {
+                                    if (array[i].equals(voterDetails.get(0).Education)) {
+                                        listView.setItemChecked(i,true);
+                                        try {
+                                            community = voterDetails.get(0).Education;
+                                            jsonObject.put("Voter_EDU",voterDetails.get(0).Education);
+
+                                        } catch (JSONException e) {
+                                            e.printStackTrace();
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    });
+                }
+            }
+        });
     }
 
     public void backPressed(View view) {
         finish();
     }
     public void forwardPressed (View view){
+        if (community.equals("")) {
+            Toast.makeText(Education.this,"Select Education",Toast.LENGTH_SHORT).show();
+            return;
+        }
         try {
             jsonObject.put("Voter_EDU",community);
         } catch (JSONException e) {

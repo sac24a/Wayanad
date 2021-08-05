@@ -30,6 +30,7 @@ public class NewVoter extends AppCompatActivity {
     ListView listView;
     SharedPreferences sharedPreferences;
     TextView textView;
+    List<NewVoterData> newVoterData;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -44,6 +45,19 @@ public class NewVoter extends AppCompatActivity {
         textView = findViewById(R.id.clickNext);
         textView.setVisibility(View.GONE);
 
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                Intent intent = new Intent(NewVoter.this,NewVoterDetail.class);
+                intent.putExtra("voterdata",getIntent().getParcelableArrayListExtra("voterdata"));
+                intent.putExtra("voterlist",getIntent().getStringArrayListExtra("voterlist"));
+                intent.putExtra("C_HOUSE_NO",getIntent().getStringExtra("C_HOUSE_NO"));
+                intent.putExtra("type","update");
+                intent.putExtra("id",newVoterData.get(i).id);
+                startActivity(intent);
+            }
+        });
+
     }
 
     @Override
@@ -54,6 +68,7 @@ public class NewVoter extends AppCompatActivity {
             public void run() {
                 PollFirstDataBase pollFirstDataBase = PollFirstDataBase.getInstance(NewVoter.this);
                 religionName = pollFirstDataBase.pollFirstDao().getNewVoterName(getIntent().getStringExtra("C_HOUSE_NO"));
+                newVoterData = pollFirstDataBase.pollFirstDao().getNewVoter(getIntent().getStringExtra("C_HOUSE_NO"));
                 if (religionName.size()!=0) {
                     AppExecutors.getInstance().mainThread().execute(new Runnable() {
                         @Override
@@ -85,6 +100,7 @@ public class NewVoter extends AppCompatActivity {
         intent.putExtra("voterdata",getIntent().getParcelableArrayListExtra("voterdata"));
         intent.putExtra("voterlist",getIntent().getStringArrayListExtra("voterlist"));
         intent.putExtra("C_HOUSE_NO",getIntent().getStringExtra("C_HOUSE_NO"));
+        intent.putExtra("type","add");
         startActivity(intent);
     }
 }

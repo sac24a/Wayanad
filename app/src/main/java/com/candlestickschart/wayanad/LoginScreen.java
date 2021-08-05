@@ -43,7 +43,7 @@ public class LoginScreen extends AppCompatActivity {
         editor = sharedPreferences.edit();
 
         if (!sharedPreferences.getString("user_id","").equals("")) {
-            Intent intent = new Intent(LoginScreen.this,SearchVoter.class);
+            Intent intent = new Intent(LoginScreen.this,DownloadVoterList.class);
             startActivity(intent);
             finish();
         }
@@ -63,7 +63,7 @@ public class LoginScreen extends AppCompatActivity {
     }
     public void apicallToLogin(){
         try {
-            String url = "https://linier.in/wayanad/API/MemberLoginRecord.php";
+            String url = "http://ourwayanad.in/API/MemberLoginRecord.php";
             Map<String, String> postParam= new HashMap<String, String>();
             postParam.put("user_mobile_no", editText.getText().toString());
             JSONObject jsonObject = new JSONObject(postParam);
@@ -85,12 +85,10 @@ public class LoginScreen extends AppCompatActivity {
                                     editor.putString("user_mobile_no",jsonObject.getString("user_mobile_no"));
                                     editor.putString("name",jsonObject.getString("name"));
                                     editor.putString("email",jsonObject.getString("email"));
-                                    editor.putString("ls_no",jsonObject.getString("ls_no"));
-                                    editor.putString("ls_name",jsonObject.getString("ls_name"));
                                     editor.putString("vs_no",jsonObject.getString("vs_no"));
                                     editor.putString("vs_name",jsonObject.getString("vs_name"));
-                                    editor.putString("booth_no",jsonObject.getString("booth_no"));
-                                    editor.putString("booth_name",jsonObject.getString("booth_name"));
+                                    editor.putString("booth_from",jsonObject.getString("booth_from"));
+                                    editor.putString("booth_to",jsonObject.getString("booth_to"));
                                     editor.commit();
                                     startActivity(intent);
                                 }
