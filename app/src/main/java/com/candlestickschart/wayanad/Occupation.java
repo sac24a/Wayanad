@@ -70,13 +70,11 @@ public class Occupation extends AppCompatActivity {
             @Override
             public void run() {
                 PollFirstDataBase pollFirstDataBase = PollFirstDataBase.getInstance(Occupation.this);
-                ArrayList<VoterListData> voterData = getIntent().getParcelableArrayListExtra("voterdata");
-                for (int i = 0; i < voterData.size(); i++) {
-                    List<VoterListData> voterDetails = pollFirstDataBase.pollFirstDao().getVoterDetails(voterData.get(i).Voter_ID);
+
+                    List<VoterListData> voterDetails = pollFirstDataBase.pollFirstDao().getVoterDetails(getIntent().getStringExtra("EPIC_NO"));
                     AppExecutors.getInstance().mainThread().execute(new Runnable() {
                         @Override
                         public void run() {
-
                             if (!voterDetails.get(0).Occupation.equals("null")) {
                                 String[] array = getResources().getStringArray(R.array.occupation);
                                 for (int i=0;i<array.length;i++) {
@@ -93,7 +91,7 @@ public class Occupation extends AppCompatActivity {
                         }
                     });
                 }
-            }
+
         });
     }
 

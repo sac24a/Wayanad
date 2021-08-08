@@ -14,6 +14,7 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.CheckedTextView;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import com.candlestickschart.wayanad.databinding.ActivityVoterDetailsBinding;
 
@@ -28,6 +29,7 @@ public class VoterDetails extends AppCompatActivity {
     ListView listView;
     Button updateButton;
     Button newVoterButton;
+    Button backButotn;
     JSONObject jsonObject;
     SharedPreferences sharedPreferences;
     String status = "";
@@ -44,6 +46,13 @@ public class VoterDetails extends AppCompatActivity {
         listView = findViewById(R.id.listView);
         updateButton = findViewById(R.id.updateDetails);
         newVoterButton = findViewById(R.id.newVoterButton);
+        backButotn = findViewById(R.id.backward);
+        backButotn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                finish();
+            }
+        });
         jsonObject = new JSONObject();
 
         ArrayList<String > arrayList = getIntent().getStringArrayListExtra("voterlist");
@@ -59,6 +68,7 @@ public class VoterDetails extends AppCompatActivity {
                 intent.putExtra("voterdata",voterData);
                 intent.putExtra("voterlist",getIntent().getStringArrayListExtra("voterlist"));
                 intent.putExtra("EPIC_NO",voterData.get(i).Voter_ID);
+                intent.putExtra("voterdetails",arrayList.get(i));
                 startActivity(intent);
             }
         });
@@ -66,12 +76,17 @@ public class VoterDetails extends AppCompatActivity {
         updateButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                if (status == "pending") {
+                    Toast.makeText(VoterDetails.this,"Please Enter Individual Details First.",Toast.LENGTH_SHORT).show();
+                }
+                else  {
+                    Intent intent = new Intent(VoterDetails.this,FamilyHead.class);
+                    intent.putExtra("voterdata",voterData);
+                    intent.putExtra("C_HOUSE_NO",voterData.get(0).Fam_ID);
+                    intent.putExtra("voterlist",getIntent().getStringArrayListExtra("voterlist"));
+                    startActivity(intent);
+                }
 
-                Intent intent = new Intent(VoterDetails.this,FamilyHead.class);
-                intent.putExtra("voterdata",voterData);
-                intent.putExtra("C_HOUSE_NO",voterData.get(0).Fam_ID);
-                intent.putExtra("voterlist",getIntent().getStringArrayListExtra("voterlist"));
-                startActivity(intent);
             }
         });
 
@@ -107,7 +122,7 @@ public class VoterDetails extends AppCompatActivity {
                             }
                             else {
                                 listView.setItemChecked(finalI,false);
-                                updateButton.setEnabled(false);
+//                                updateButton.setEnabled(false);
                                 status = "pending";
                             }
 

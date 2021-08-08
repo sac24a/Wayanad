@@ -134,7 +134,7 @@ public class NewVoterDetail extends AppCompatActivity {
                                 finish();
                             }
                             else {
-                                NewVoterData pollFirstData = new NewVoterData(getIntent().getStringExtra("C_HOUSE_NO"),name.getText().toString(),gender.getSelectedItem().toString(),dob.getText().toString(),mobile.getText().toString(),sharedPreferences.getString("booth",""));
+                                NewVoterData pollFirstData = new NewVoterData(getIntent().getStringExtra("C_HOUSE_NO"),name.getText().toString(),gender.getSelectedItem().toString(),dob.getText().toString(),mobile.getText().toString(),sharedPreferences.getString("booth_no",""));
                                 pollFirstDataBase.pollFirstDao().insertNewVoter(pollFirstData);
                                 finish();
                             }

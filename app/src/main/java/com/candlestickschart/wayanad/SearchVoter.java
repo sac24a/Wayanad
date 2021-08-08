@@ -89,7 +89,7 @@ public class SearchVoter extends AppCompatActivity {
                 List<VoterListData> familyList = pollFirstDataBase.pollFirstDao().searchVoterFamilyList(houseNo);
                 ArrayList<String> name = new ArrayList<>();
                 for (int i =0;i<familyList.size();i++) {
-                    name.add(familyList.get(i).Voter_name);
+                    name.add(familyList.get(i).SNo+"."+familyList.get(i).Voter_name+" - "+familyList.get(i).Sex+" ("+familyList.get(i).Age+") ");
                 }
                 Log.d("TAG", "run: "+familyList.size());
                 Intent intent = new Intent(SearchVoter.this,VoterDetails.class);

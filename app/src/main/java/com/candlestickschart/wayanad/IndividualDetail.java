@@ -13,6 +13,7 @@ import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.RadioButton;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.candlestickschart.wayanad.databinding.ActivityCommunityBinding;
@@ -24,6 +25,7 @@ import org.json.JSONObject;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 
@@ -41,6 +43,7 @@ public class IndividualDetail extends AppCompatActivity {
     SharedPreferences sharedPreferences;
     Calendar myCalendar;
     String type="";
+    TextView voterDetails;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -62,6 +65,8 @@ public class IndividualDetail extends AppCompatActivity {
         mobile = findViewById(R.id.mobile);
         whatsapp = findViewById(R.id.whastapp);
         same = findViewById(R.id.sameWhatsapp);
+        voterDetails = findViewById(R.id.voterDetail);
+        voterDetails.setText(getIntent().getStringExtra("voterdetails"));
 
         myCalendar = Calendar.getInstance();
         radioButton1.setOnClickListener(new View.OnClickListener() {
@@ -96,7 +101,12 @@ public class IndividualDetail extends AppCompatActivity {
                 myCalendar.set(Calendar.YEAR, year);
                 myCalendar.set(Calendar.MONTH, monthOfYear);
                 myCalendar.set(Calendar.DAY_OF_MONTH, dayOfMonth);
-                updateLabel();
+                SimpleDateFormat format=new SimpleDateFormat ("yyyy");
+                int nowyear=Integer.parseInt (format.format (new Date()));
+                int age = nowyear-year;
+                Log.d("TAG", "onDateSet: "+age);
+                updateLabel(age);
+
             }
 
         };
@@ -127,14 +137,24 @@ public class IndividualDetail extends AppCompatActivity {
         });
         setData();
     }
+    private void updateLabel(int age) {
+        String myFormat = "dd/mm/yyyy"; //In which you need put here
+        SimpleDateFormat sdf = new SimpleDateFormat(myFormat, Locale.US);
+        if (type.equals("dob")) {
+            dob.setText(String.valueOf(age));
+        }
+        else {
+            anniversary.setText(sdf.format(myCalendar.getTime()));
+        }
+
+    }
     public void setData() {
         AppExecutors.getInstance().diskIO().execute(new Runnable() {
             @Override
             public void run() {
                 PollFirstDataBase pollFirstDataBase = PollFirstDataBase.getInstance(IndividualDetail.this);
-                ArrayList<VoterListData> voterData = getIntent().getParcelableArrayListExtra("voterdata");
-                for (int i = 0; i < voterData.size(); i++) {
-                    List<VoterListData> voterDetails = pollFirstDataBase.pollFirstDao().getVoterDetails(voterData.get(i).Voter_ID);
+
+                    List<VoterListData> voterDetails = pollFirstDataBase.pollFirstDao().getVoterDetails(getIntent().getStringExtra("EPIC_NO"));
                     AppExecutors.getInstance().mainThread().execute(new Runnable() {
                         @Override
                         public void run() {
@@ -165,33 +185,31 @@ public class IndividualDetail extends AppCompatActivity {
                             if (!voterDetails.get(0).DOB.equals("null")) {
                                 dob.setText(voterDetails.get(0).DOB);
                             }
+                            else  {
+                                dob.setText(voterDetails.get(0).Age);
+                            }
                             if (!voterDetails.get(0).Anniversary.equals("null")) {
                                 anniversary.setText(voterDetails.get(0).Anniversary);
                             }
                             if (!voterDetails.get(0).Whatsapp_no.equals("null")) {
                                 mobile.setText(voterDetails.get(0).Whatsapp_no);
                             }
+                            else  {
+                                mobile.setText(voterDetails.get(0).ContactNo);
+                            }
                             if (!voterDetails.get(0).Whatsapp_no.equals("null")) {
                                 whatsapp.setText(voterDetails.get(0).Whatsapp_no);
+                            }else  {
+                                mobile.setText(voterDetails.get(0).ContactNo);
                             }
 
                         }
                     });
-                }
+
             }
         });
     }
-    private void updateLabel() {
-        String myFormat = "MM/dd/yy"; //In which you need put here
-        SimpleDateFormat sdf = new SimpleDateFormat(myFormat, Locale.US);
-        if (type.equals("dob")) {
-            dob.setText(sdf.format(myCalendar.getTime()));
-        }
-        else {
-            anniversary.setText(sdf.format(myCalendar.getTime()));
-        }
 
-    }
 
 
     public void backPressed(View view) {
@@ -241,6 +259,7 @@ public class IndividualDetail extends AppCompatActivity {
                 intent.putExtra("json",jsonObject.toString());
                 intent.putExtra("voterlist",getIntent().getStringArrayListExtra("voterlist"));
                 intent.putExtra("voterdata",getIntent().getParcelableArrayListExtra("voterdata"));
+                intent.putExtra("EPIC_NO",getIntent().getStringExtra("EPIC_NO"));
                 startActivity(intent);
             }
 

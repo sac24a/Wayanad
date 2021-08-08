@@ -36,7 +36,7 @@
             android:layout_height="match_parent"
             android:id="@+id/listView"
             android:layout_below="@id/topText"
-            android:layout_above="@id/bottomLay"
+            android:layout_above="@id/forward"
             android:layout_marginTop="20dp"/>
 
         <TextView
@@ -54,12 +54,36 @@
             android:layout_centerInParent="true"
             />
 
-        <include layout="@layout/bottom"
-            android:id="@+id/bottomLay"
+        <Button
+            android:layout_width="100dp"
+            android:layout_height="40dp"
+            android:id="@+id/backward"
+            android:layout_marginLeft="30dp"
+            android:onClick="backPressed"
+            android:text="@string/backButton"
+            android:textSize="20dp"
+            android:textAllCaps="false"
+            android:background="@drawable/newsample"
+            android:textColor="#ffffff"
             android:layout_alignParentBottom="true"
-            android:layout_height="wrap_content"
-            android:layout_width="match_parent"
-            android:layout_marginBottom="20dp"/>
+            android:layout_marginBottom="20dp"
+            />
+        <Button
+            android:layout_width="100dp"
+            android:layout_height="40dp"
+            android:layout_alignParentRight="true"
+            android:id="@+id/forward"
+            android:layout_marginRight="30dp"
+            android:onClick="forwardPressed"
+            android:text="Add More"
+            android:textSize="20dp"
+            android:textAllCaps="false"
+            android:background="@drawable/newsample"
+            android:layout_alignParentBottom="true"
+            android:textColor="#ffffff"
+            android:layout_marginBottom="20dp"
+
+            />
 
 
     </RelativeLayout>

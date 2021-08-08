@@ -16,10 +16,14 @@ import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
+import com.google.gson.Gson;
+import com.google.gson.JsonArray;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -31,6 +35,7 @@ public class LoginScreen extends AppCompatActivity {
     SharedPreferences sharedPreferences;
     SharedPreferences.Editor editor;
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -39,14 +44,7 @@ public class LoginScreen extends AppCompatActivity {
         editText = findViewById(R.id.mobile);
         login = findViewById(R.id.login);
         progressBar = findViewById(R.id.progressBar);
-        sharedPreferences = getSharedPreferences("login",MODE_PRIVATE);
-        editor = sharedPreferences.edit();
 
-        if (!sharedPreferences.getString("user_id","").equals("")) {
-            Intent intent = new Intent(LoginScreen.this,DownloadVoterList.class);
-            startActivity(intent);
-            finish();
-        }
 
         login.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -59,8 +57,49 @@ public class LoginScreen extends AppCompatActivity {
                 }
             }
         });
-
     }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        sharedPreferences = getSharedPreferences("login",MODE_PRIVATE);
+        editor = sharedPreferences.edit();
+
+        if (!sharedPreferences.getString("user_id","").equals("")) {
+            AppExecutors.getInstance().diskIO().execute(new Runnable() {
+                @Override
+                public void run() {
+                    try {
+                        PollFirstDataBase pollFirstDataBase = PollFirstDataBase.getInstance(LoginScreen.this);
+                        Integer size = pollFirstDataBase.pollFirstDao().getVoterList().size();
+
+                        AppExecutors.getInstance().mainThread().execute(new Runnable() {
+                            @Override
+                            public void run() {
+                                if (size==0) {
+                                    Intent intent = new Intent(LoginScreen.this,DownloadVoterList.class);
+                                    startActivity(intent);
+                                    finish();
+                                }
+                                else  {
+                                    Intent intent = new Intent(LoginScreen.this,SearchVoter.class);
+                                    startActivity(intent);
+                                    finish();
+                                }
+
+
+                            }
+                        });
+                    }
+                    catch (Exception e ) {
+
+                    }
+                }
+            });
+
+        }
+    }
+
     public void apicallToLogin(){
         try {
             String url = "http://ourwayanad.in/API/MemberLoginRecord.php";
@@ -80,6 +119,7 @@ public class LoginScreen extends AppCompatActivity {
                                 JSONObject jsonObject = new JSONObject(response.toString());
                                 if (jsonObject.getBoolean("success"))
                                 {
+
                                     Intent intent = new Intent(LoginScreen.this,MainActivity.class);
                                     editor.putString("user_id",jsonObject.getString("user_id"));
                                     editor.putString("user_mobile_no",jsonObject.getString("user_mobile_no"));
@@ -90,6 +130,7 @@ public class LoginScreen extends AppCompatActivity {
                                     editor.putString("booth_from",jsonObject.getString("booth_from"));
                                     editor.putString("booth_to",jsonObject.getString("booth_to"));
                                     editor.commit();
+
                                     startActivity(intent);
                                 }
                                 else  {

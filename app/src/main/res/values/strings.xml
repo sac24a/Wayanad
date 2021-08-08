@@ -162,8 +162,9 @@
     <array name="boothno">
         <item>Select Booth NO</item>
     </array>
-    <string name="downloadBtn">Download Voter List</string>
+    <string name="downloadBtn">Download voter data</string>
     <string name="app_name">Wayanad</string>
+    <string name="downloadNote">Download voter data for the booth you wish to enter</string>
     <string name="searchNote">Search for voter or the family based on House no, Serial no or EPIC no</string>
     <string name="updateNote">Please Click on the voter’s name to add/ edit details about voters</string>
     <string name="communityNote">Please select social group/ community of the family</string>

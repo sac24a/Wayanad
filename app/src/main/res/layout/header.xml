@@ -58,9 +58,9 @@
 
             </LinearLayout>
             <ImageView
-                android:layout_width="100dp"
-                android:layout_height="100dp"
-                android:background="@drawable/rahul"
+                android:layout_width="80dp"
+                android:layout_height="80dp"
+                android:background="@drawable/inc"
                 android:id="@+id/logo"
                 android:layout_alignParentRight="true"
                 android:layout_marginRight="10dp"/>

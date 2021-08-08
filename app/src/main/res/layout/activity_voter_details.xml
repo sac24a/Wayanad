@@ -20,31 +20,53 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:id="@+id/listView"
-            android:layout_below="@id/top"
+            android:layout_below="@id/bottomText"
             android:layout_marginTop="20dp"
             android:layout_above="@id/updateDetails"/>
         <Button
-            android:layout_width="150dp"
-            android:layout_height="50dp"
+            android:layout_width="wrap_content"
+            android:layout_height="40dp"
             android:id="@+id/updateDetails"
             android:text="@string/voterDetailsButtontext"
             android:textColor="#ffffff"
             android:layout_gravity="center"
             android:background="@drawable/newsample"
             android:layout_marginTop="20dp"
+            android:textAllCaps="false"
+            android:paddingLeft="20dp"
+            android:paddingRight="20dp"
             android:layout_centerInParent="true"
             android:layout_above="@id/newVoterButton"/>
         <Button
-            android:layout_width="150dp"
-            android:layout_height="50dp"
+            android:layout_width="wrap_content"
+            android:layout_height="40dp"
             android:id="@+id/newVoterButton"
             android:text="@string/newVoterButton"
             android:textColor="#ffffff"
             android:layout_gravity="center"
+            android:paddingLeft="20dp"
+            android:paddingRight="20dp"
             android:background="@drawable/newsample"
             android:layout_marginTop="20dp"
             android:layout_centerInParent="true"
-            android:layout_above="@id/bottomText"/>
+            android:layout_alignParentBottom="true"
+            android:layout_marginBottom="20dp"
+            android:textAllCaps="false"
+            />
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="40dp"
+            android:id="@+id/backward"
+            android:text="@string/backButton"
+            android:textColor="#ffffff"
+            android:layout_gravity="center"
+            android:background="@drawable/newsample"
+            android:layout_marginTop="20dp"
+            android:layout_marginLeft="20dp"
+            android:layout_marginBottom="20dp"
+            android:layout_alignParentBottom="true"
+            android:textAllCaps="false"
+            />
 
         <TextView
             android:layout_width="match_parent"
@@ -55,7 +77,7 @@
             android:layout_marginTop="20dp"
             android:gravity="center"
             android:id="@+id/bottomText"
-            android:layout_alignParentBottom="true"
+            android:layout_below="@id/top"
             />
 
 

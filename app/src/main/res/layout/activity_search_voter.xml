@@ -36,7 +36,7 @@
                     />
                 <EditText
                     android:layout_width="match_parent"
-                    android:layout_height="50dp"
+                    android:layout_height="40dp"
                     android:id="@+id/searchString"
                     android:hint="@string/searchVoterEdittext"
                     android:gravity="center"
@@ -46,21 +46,25 @@
                     android:layout_marginRight="30dp"
                     android:background="@drawable/edit_bg"/>
                 <Button
-                    android:layout_width="150dp"
-                    android:layout_height="50dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="40dp"
                     android:id="@+id/login"
                     android:text="@string/searchVoterButtontext"
                     android:textColor="#ffffff"
                     android:layout_gravity="center"
                     android:background="@drawable/newsample"
+                    android:paddingLeft="20dp"
+                    android:paddingRight="20dp"
                     android:layout_marginTop="20dp"/>
                 <Button
-                    android:layout_width="150dp"
-                    android:layout_height="50dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="40dp"
                     android:id="@+id/upload"
                     android:text="@string/uploadButton"
                     android:textColor="#ffffff"
                     android:layout_gravity="center"
+                    android:paddingLeft="20dp"
+                    android:paddingRight="20dp"
                     android:background="@drawable/newsample"
                     android:layout_marginTop="20dp"/>
 
