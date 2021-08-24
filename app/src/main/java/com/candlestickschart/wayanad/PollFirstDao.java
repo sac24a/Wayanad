@@ -53,12 +53,11 @@ public interface PollFirstDao {
     @Query("UPDATE voterlist SET Live_Here=:place, Alt_address=:residence, DOB=:dob, Anniversary=:anniversary, Whatsapp_no=:mobile, Education=:edu, Occupation=:occu WHERE Voter_ID = :epicno")
     void updateVoterIndividual(String place,String residence,String dob,String anniversary,String mobile,String edu,String occu,String epicno);
 
-    @Query("UPDATE voterlist SET HOF=:head, Segment=:community, Community=:caste, Ration_card=:ration, Land_holding=:land, Pol_affinity=:political, Livelihood=:livelihood, Status=:status WHERE Fam_ID = :epicno")
-    void updateVoterDetail(String head,String community,String caste,String ration,String land,String political,String livelihood,String epicno,String status);
+    @Query("UPDATE voterlist SET HOF=:head, Segment=:community, Community=:caste, Ration_card=:ration, Land_holding=:land, Pol_affinity=:political, Livelihood=:livelihood, Status=:status, Vehicle=:vehicle WHERE Fam_ID = :epicno")
+    void updateVoterDetail(String head,String community,String caste,String ration,String land,String political,String livelihood,String epicno,String status,String vehicle);
 
-    @Query("DELETE FROM pollfirst")
-    void clearPollfirstTable();
-
+    @Query("DELETE FROM voterlist")
+    void clearVoterTable();
     @Query("DELETE FROM newvoter")
     void clearNewVoterTable();
 

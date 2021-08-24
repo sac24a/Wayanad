@@ -47,6 +47,7 @@ public class SearchVoter extends AppCompatActivity {
     EditText searchText;
     Button searchButton;
     Button uploadButton;
+    Button logoutButton;
     ProgressBar progressBar;
     SharedPreferences.Editor editor;
     @Override
@@ -60,6 +61,7 @@ public class SearchVoter extends AppCompatActivity {
 
         searchButton = findViewById(R.id.login);
         uploadButton = findViewById(R.id.upload);
+        logoutButton = findViewById(R.id.logout);
         searchText = findViewById(R.id.searchString);
         progressBar = findViewById(R.id.progressBar);
 
@@ -77,6 +79,31 @@ public class SearchVoter extends AppCompatActivity {
                 setUpUpload();
             }
         });
+        logoutButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                editor.clear().apply();
+                AppExecutors.getInstance().diskIO().execute(new Runnable() {
+                    @Override
+                    public void run() {
+                        PollFirstDataBase pollFirstDataBase = PollFirstDataBase.getInstance(SearchVoter.this);
+                        pollFirstDataBase.clearAllTables();
+                        if (pollFirstDataBase.pollFirstDao().getVoterList().size()==0) {
+                            AppExecutors.getInstance().mainThread().execute(new Runnable() {
+                                @Override
+                                public void run() {
+                                    Intent intent = new Intent(SearchVoter.this,LoginScreen.class);
+                                    startActivity(intent);
+                                    finish();
+                                }
+                            });
+                        }
+
+                    }
+                });
+
+            }
+        });
 
     }
 
@@ -89,7 +116,7 @@ public class SearchVoter extends AppCompatActivity {
                 List<VoterListData> familyList = pollFirstDataBase.pollFirstDao().searchVoterFamilyList(houseNo);
                 ArrayList<String> name = new ArrayList<>();
                 for (int i =0;i<familyList.size();i++) {
-                    name.add(familyList.get(i).SNo+"."+familyList.get(i).Voter_name+" - "+familyList.get(i).Sex+" ("+familyList.get(i).Age+") ");
+                    name.add(familyList.get(i).SNo+"."+familyList.get(i).Voter_name+" - "+familyList.get(i).Sex+" ("+familyList.get(i).Age+")"+" - "+familyList.get(i).HouseNoEn);
                 }
                 Log.d("TAG", "run: "+familyList.size());
                 Intent intent = new Intent(SearchVoter.this,VoterDetails.class);
@@ -170,16 +197,13 @@ public class SearchVoter extends AppCompatActivity {
                         politicalJson.put("Education",pollFirstData.get(i).Education);
                         politicalJson.put("Occupation",pollFirstData.get(i).Occupation);
                         politicalJson.put("Status",pollFirstData.get(i).Status);
+                        politicalJson.put("Vehicle",pollFirstData.get(i).Vehicle);
                         politicalArray.put(politicalJson);
                     }
 
                     jsonToUpload.put("voter_detail",politicalArray);
                     jsonToUpload.put("new_voter",socialArray);
                     sendData(jsonToUpload);
-                    Log.d("JsontoUpload", "run: "+jsonToUpload);
-                    Log.d("Social", "run: "+socialArray);
-
-
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }

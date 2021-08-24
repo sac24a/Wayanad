@@ -67,7 +67,7 @@ public class DownloadVoterList extends AppCompatActivity {
                         progressBar.setVisibility(View.VISIBLE);
                         editor.putString("booth_no",boothno.getText().toString());
                         for (int i = 0;i<vsData.size();i++) {
-                            if (vsData.get(i).PartNo.equals(boothno.getText().toString())) {
+                            if (vsData.get(i).PartNo.equals(boothno.getText().toString()) && vsData.get(i).AcNo.equals(vsNo.getSelectedItem().toString())) {
                                 editor.putString("booth_name",vsData.get(i).Booth_name);
                                 editor.putString("booth_id",vsData.get(i).Booth_ID);
                                 i = vsData.size();
@@ -249,7 +249,7 @@ public class DownloadVoterList extends AppCompatActivity {
                                                             jsonObject.getString("Anniversary"),
                                                             jsonObject.getString("Whatsapp_no"),
                                                             jsonObject.getString("Education"),
-                                                            jsonObject.getString("Occupation"),"");
+                                                            jsonObject.getString("Occupation"),"","");
                                                     pollFirstDataBase.pollFirstDao().insertVoterList(pollFirstData);
 
                                                 }

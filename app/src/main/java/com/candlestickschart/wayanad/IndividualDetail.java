@@ -44,6 +44,8 @@ public class IndividualDetail extends AppCompatActivity {
     Calendar myCalendar;
     String type="";
     TextView voterDetails;
+    RadioButton marriedRbtn1;
+    RadioButton marriedRbtn2;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -59,6 +61,8 @@ public class IndividualDetail extends AppCompatActivity {
 
         radioButton1 = findViewById(R.id.yes);
         radioButton2 = findViewById(R.id.no);
+        marriedRbtn1 = findViewById(R.id.rbtn1);
+        marriedRbtn2 = findViewById(R.id.rbtn2);
         residence = findViewById(R.id.currentResidence);
         dob = findViewById(R.id.dob);
         anniversary = findViewById(R.id.anniversary);
@@ -89,6 +93,18 @@ public class IndividualDetail extends AppCompatActivity {
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
+            }
+        });
+        marriedRbtn1.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                anniversary.setVisibility(View.VISIBLE);
+            }
+        });
+        marriedRbtn2.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                anniversary.setVisibility(View.GONE);
             }
         });
 
@@ -138,10 +154,10 @@ public class IndividualDetail extends AppCompatActivity {
         setData();
     }
     private void updateLabel(int age) {
-        String myFormat = "dd/mm/yyyy"; //In which you need put here
+        String myFormat = "MMM dd, yyyy"; //In which you need put here
         SimpleDateFormat sdf = new SimpleDateFormat(myFormat, Locale.US);
         if (type.equals("dob")) {
-            dob.setText(String.valueOf(age));
+            dob.setText(sdf.format(myCalendar.getTime()));
         }
         else {
             anniversary.setText(sdf.format(myCalendar.getTime()));
@@ -186,7 +202,9 @@ public class IndividualDetail extends AppCompatActivity {
                                 dob.setText(voterDetails.get(0).DOB);
                             }
                             else  {
-                                dob.setText(voterDetails.get(0).Age);
+                                int age = Integer.parseInt(voterDetails.get(0).Age);
+                                int dobInt = 2021 - age;
+                                dob.setText("Jan 1,"+dobInt);
                             }
                             if (!voterDetails.get(0).Anniversary.equals("null")) {
                                 anniversary.setText(voterDetails.get(0).Anniversary);

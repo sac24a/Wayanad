@@ -117,7 +117,7 @@ public class Economic extends AppCompatActivity {
             }
             jsonObject.put("Ration_Card",community);
             jsonObject.put("Land_Holding",land.getText().toString());
-            Intent intent = new Intent(this,Political.class);
+            Intent intent = new Intent(this,VehicleList.class);
             intent.putExtra("voterlist",getIntent().getStringArrayListExtra("voterlist"));
             intent.putExtra("voterdata",getIntent().getParcelableArrayListExtra("voterdata"));
             intent.putExtra("json",jsonObject.toString());

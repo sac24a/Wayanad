@@ -20,7 +20,14 @@
         <item>LDF</item>
         <item>BJP</item>
         <item>Others</item>
-        <item>Nuteral</item>
+        <item>Neutral</item>
+    </array>
+    <array name="vehicleList">
+        <item>SUV/ Luxury car More than Rs 10 lakh</item>
+        <item>Car/Jeep 4 wheeler</item>
+        <item>Two Wheeler</item>
+        <item>Cycle</item>
+        <item>No Vehicle</item>
     </array>
     <array name="occupation">
         <item>Unemployed</item>
@@ -45,6 +52,9 @@
 
     </array>
     <array name="livelihood">
+
+        <item>No source of livelihood</item>
+        <item>Gulf remittances</item>
         <item>General Labour</item>
         <item>Landless Agricultural Labour</item>
         <item>Industrial Labour</item>
