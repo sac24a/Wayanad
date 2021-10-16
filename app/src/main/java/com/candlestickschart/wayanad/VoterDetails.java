@@ -45,6 +45,7 @@ public class VoterDetails extends AppCompatActivity {
 
         listView = findViewById(R.id.listView);
         updateButton = findViewById(R.id.updateDetails);
+        updateButton.setVisibility(View.GONE);
         newVoterButton = findViewById(R.id.newVoterButton);
         backButotn = findViewById(R.id.backward);
         backButotn.setOnClickListener(new View.OnClickListener() {

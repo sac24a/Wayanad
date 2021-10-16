@@ -114,7 +114,7 @@ public class DownloadVoterList extends AppCompatActivity {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
                 editor.putString("acname",vsData.get(i).AcName);
-                editor.putString("acno",vsData.get(i).AcNo);
+                editor.putString("acno",acno.get(i));
                 editor.apply();
             }
 
@@ -249,7 +249,7 @@ public class DownloadVoterList extends AppCompatActivity {
                                                             jsonObject.getString("Anniversary"),
                                                             jsonObject.getString("Whatsapp_no"),
                                                             jsonObject.getString("Education"),
-                                                            jsonObject.getString("Occupation"),"","");
+                                                            jsonObject.getString("Occupation"),"","","");
                                                     pollFirstDataBase.pollFirstDao().insertVoterList(pollFirstData);
 
                                                 }

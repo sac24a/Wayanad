@@ -151,6 +151,7 @@ public class SearchVoter extends AppCompatActivity {
                         socialJson.put("New_Gender",socialData.get(i).New_Gender);
                         socialJson.put("New_DOB",socialData.get(i).New_DOB);
                         socialJson.put("New_Mobile",socialData.get(i).New_Mobile);
+                        socialJson.put("famgrp_id",socialData.get(i).famgrp_id);
                         socialArray.put(socialJson);
                     }
                     for (int i = 0;i<pollFirstData.size();i++) {
@@ -182,7 +183,7 @@ public class SearchVoter extends AppCompatActivity {
                         politicalJson.put("Sex",pollFirstData.get(i).Sex);
                         politicalJson.put("Age",pollFirstData.get(i).Age);
                         politicalJson.put("ContactNo",pollFirstData.get(i).ContactNo);
-                        politicalJson.put("HOF",pollFirstData.get(i).HOF);
+                        politicalJson.put("HOF","");
                         politicalJson.put("Segment",pollFirstData.get(i).Segment);
                         politicalJson.put("Community",pollFirstData.get(i).Community);
                         politicalJson.put("Ration_card",pollFirstData.get(i).Ration_card);
@@ -198,11 +199,13 @@ public class SearchVoter extends AppCompatActivity {
                         politicalJson.put("Occupation",pollFirstData.get(i).Occupation);
                         politicalJson.put("Status",pollFirstData.get(i).Status);
                         politicalJson.put("Vehicle",pollFirstData.get(i).Vehicle);
+                        politicalJson.put("famgrp_id",pollFirstData.get(i).famgrp_id);
                         politicalArray.put(politicalJson);
                     }
 
                     jsonToUpload.put("voter_detail",politicalArray);
                     jsonToUpload.put("new_voter",socialArray);
+                    Log.d("TAG", "run: "+jsonToUpload);
                     sendData(jsonToUpload);
                 } catch (JSONException e) {
                     e.printStackTrace();

@@ -90,6 +90,8 @@ public class VoterListData implements Parcelable {
     public String Status;
     @ColumnInfo(name = "Vehicle")
     public String Vehicle;
+    @ColumnInfo(name = "famgrp_id")
+    public String famgrp_id;
 
     public VoterListData(int id,
      String State,
@@ -128,7 +130,7 @@ public class VoterListData implements Parcelable {
     String Anniversary,
     String Whatsapp_no,
     String Education,
-    String Occupation,String Status,String Vehicle){
+    String Occupation,String Status,String Vehicle,String famgrp_id){
         this.id=id;
         this.State=State;
         this.LS_No=LS_No;
@@ -169,8 +171,7 @@ public class VoterListData implements Parcelable {
         this.Occupation=Occupation;
         this.Status=Status;
         this.Vehicle=Vehicle;
-
-
+        this.famgrp_id=famgrp_id;
     }
 
     @Ignore
@@ -210,7 +211,7 @@ public class VoterListData implements Parcelable {
                          String Anniversary,
                          String Whatsapp_no,
                          String Education,
-                         String Occupation,String Status,String Vehicle){
+                         String Occupation,String Status,String Vehicle,String famgrp_id){
 
         this.id=id;
         this.State=State;
@@ -252,7 +253,7 @@ public class VoterListData implements Parcelable {
         this.Occupation=Occupation;
         this.Status=Status;
         this.Vehicle=Vehicle;
-
+        this.famgrp_id=famgrp_id;
     }
 
     protected VoterListData(Parcel in) {
@@ -296,6 +297,7 @@ public class VoterListData implements Parcelable {
         Occupation = in.readString();
         Status = in.readString();
         Vehicle = in.readString();
+        famgrp_id = in.readString();
 
     }
 
@@ -358,5 +360,6 @@ public class VoterListData implements Parcelable {
         parcel.writeString(Occupation);
         parcel.writeString(Status);
         parcel.writeString(Vehicle);
+        parcel.writeString(famgrp_id);
     }
 }

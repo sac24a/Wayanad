@@ -22,6 +22,8 @@ public class NewVoterData {
     public String New_Mobile;
     @ColumnInfo(name = "Booth_no")
     public String Booth_no;
+    @ColumnInfo(name = "famgrp_id")
+    public String famgrp_id;
 
     public NewVoterData(int id,
                          String C_HOUSE_NO,
@@ -29,7 +31,7 @@ public class NewVoterData {
                          String New_Gender,
                          String New_DOB,
                          String New_Mobile,
-                        String Booth_no){
+                        String Booth_no,String famgrp_id){
         this.id = id;
         this.C_HOUSE_NO = C_HOUSE_NO;
         this.New_DOB = New_DOB;
@@ -37,6 +39,7 @@ public class NewVoterData {
         this.New_Name = New_Name;
         this.New_Mobile = New_Mobile;
         this.Booth_no = Booth_no;
+        this.famgrp_id=famgrp_id;
     }
     @Ignore
     public NewVoterData(String C_HOUSE_NO,
@@ -44,13 +47,14 @@ public class NewVoterData {
                          String New_Gender,
                          String New_DOB,
                          String New_Mobile,
-                        String Booth_no){
+                        String Booth_no,String famgrp_id){
         this.C_HOUSE_NO = C_HOUSE_NO;
         this.New_DOB = New_DOB;
         this.New_Gender = New_Gender;
         this.New_Name = New_Name;
         this.New_Mobile = New_Mobile;
         this.Booth_no = Booth_no;
+        this.famgrp_id=famgrp_id;
 
     }
 }

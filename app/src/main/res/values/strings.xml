@@ -217,6 +217,7 @@
     <string name="occuText">Occupation</string>
     <string name="liveliText">Main source of livelihood for the family</string>
     <string name="politicalText">Political Affinity of the family</string>
+    <string name="vehicleText">Vehicle in the family</string>
     <string name="newVoterButton">Add New Voter</string>
     <string name="uploadButton">Upload Data</string>
 

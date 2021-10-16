@@ -31,6 +31,7 @@ public class NewVoterDetail extends AppCompatActivity {
     EditText mobile;
     SharedPreferences sharedPreferences;
     Calendar myCalendar;
+    EditText formNumTxt;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,6 +47,7 @@ public class NewVoterDetail extends AppCompatActivity {
         gender = findViewById(R.id.gender);
         dob = findViewById(R.id.dob);
         mobile = findViewById(R.id.mobile);
+        formNumTxt = findViewById(R.id.formNumber);
         myCalendar = Calendar.getInstance();
         DatePickerDialog.OnDateSetListener date = new DatePickerDialog.OnDateSetListener() {
 
@@ -86,6 +88,7 @@ public class NewVoterDetail extends AppCompatActivity {
                         name.setText(newVoterData.get(0).New_Name);
                         mobile.setText(newVoterData.get(0).New_Mobile);
                         dob.setText(newVoterData.get(0).New_DOB);
+                        formNumTxt.setText(newVoterData.get(0).famgrp_id);
                     }
                 });
             }
@@ -111,8 +114,13 @@ public class NewVoterDetail extends AppCompatActivity {
                 Toast.makeText(NewVoterDetail.this,"Select Gender",Toast.LENGTH_SHORT).show();
                 return;
             }
+
             if (dob.getText().toString().equals("")) {
                 Toast.makeText(NewVoterDetail.this,"Enter DOB",Toast.LENGTH_SHORT).show();
+                return;
+            }
+            if (formNumTxt.getText().toString().equals("")) {
+                Toast.makeText(NewVoterDetail.this,"Enter Form Number",Toast.LENGTH_SHORT).show();
                 return;
             }
             if (mobile.getText().toString().equals("")) {
@@ -130,11 +138,11 @@ public class NewVoterDetail extends AppCompatActivity {
 
                             PollFirstDataBase pollFirstDataBase = PollFirstDataBase.getInstance(NewVoterDetail.this);
                             if (getIntent().getStringExtra("type").equals("update")) {
-                                pollFirstDataBase.pollFirstDao().updateNewVoterById(name.getText().toString(),gender.getSelectedItem().toString(),dob.getText().toString(),mobile.getText().toString(),getIntent().getIntExtra("id",0));
+                                pollFirstDataBase.pollFirstDao().updateNewVoterById(name.getText().toString(),gender.getSelectedItem().toString(),dob.getText().toString(),mobile.getText().toString(),sharedPreferences.getString("acno","")+"_"+sharedPreferences.getString("booth_no","")+"_"+formNumTxt.getText().toString(),getIntent().getIntExtra("id",0));
                                 finish();
                             }
                             else {
-                                NewVoterData pollFirstData = new NewVoterData(getIntent().getStringExtra("C_HOUSE_NO"),name.getText().toString(),gender.getSelectedItem().toString(),dob.getText().toString(),mobile.getText().toString(),sharedPreferences.getString("booth_no",""));
+                                NewVoterData pollFirstData = new NewVoterData(getIntent().getStringExtra("C_HOUSE_NO"),name.getText().toString(),gender.getSelectedItem().toString(),dob.getText().toString(),mobile.getText().toString(),sharedPreferences.getString("booth_no",""),sharedPreferences.getString("acno","")+"_"+sharedPreferences.getString("booth_no","")+"_"+formNumTxt.getText().toString());
                                 pollFirstDataBase.pollFirstDao().insertNewVoter(pollFirstData);
                                 finish();
                             }

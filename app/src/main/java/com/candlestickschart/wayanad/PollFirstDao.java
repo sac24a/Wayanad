@@ -47,11 +47,11 @@ public interface PollFirstDao {
     @Query("Select * from newvoter WHERE id = :epicno")
     List<NewVoterData> getNewVoterById(Integer epicno);
 
-    @Query("UPDATE newvoter SET New_Name=:name, New_Gender=:gender, New_DOB=:dob, New_Mobile=:mobile WHERE id = :epicno")
-    void updateNewVoterById(String name, String gender, String dob, String mobile, Integer epicno);
+    @Query("UPDATE newvoter SET New_Name=:name, New_Gender=:gender, New_DOB=:dob, New_Mobile=:mobile, famgrp_id=:famgrp_id WHERE id = :epicno")
+    void updateNewVoterById(String name, String gender, String dob, String mobile,String famgrp_id, Integer epicno);
 
-    @Query("UPDATE voterlist SET Live_Here=:place, Alt_address=:residence, DOB=:dob, Anniversary=:anniversary, Whatsapp_no=:mobile, Education=:edu, Occupation=:occu WHERE Voter_ID = :epicno")
-    void updateVoterIndividual(String place,String residence,String dob,String anniversary,String mobile,String edu,String occu,String epicno);
+    @Query("UPDATE voterlist SET Live_Here=:place, Alt_address=:residence, DOB=:dob, Anniversary=:anniversary, Whatsapp_no=:mobile, Education=:edu, Occupation=:occu, Segment=:community, Community=:caste, Ration_card=:ration, Land_holding=:land, Pol_affinity=:political, Livelihood=:livelihood, Status=:status, Vehicle=:vehicle, famgrp_id=:famgrp_id WHERE Voter_ID = :epicno")
+    void updateVoterIndividual(String place,String residence,String dob,String anniversary,String mobile,String edu,String occu,String epicno,String community,String caste,String ration,String land,String political,String livelihood,String status,String vehicle,String famgrp_id);
 
     @Query("UPDATE voterlist SET HOF=:head, Segment=:community, Community=:caste, Ration_card=:ration, Land_holding=:land, Pol_affinity=:political, Livelihood=:livelihood, Status=:status, Vehicle=:vehicle WHERE Fam_ID = :epicno")
     void updateVoterDetail(String head,String community,String caste,String ration,String land,String political,String livelihood,String epicno,String status,String vehicle);

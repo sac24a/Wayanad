@@ -30,6 +30,7 @@ public class Livelyhood extends AppCompatActivity {
     String community = "";
     JSONObject jsonObject;
     EditText editText;
+    EditText formNumTxt;
     SharedPreferences sharedPreferences;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -49,6 +50,7 @@ public class Livelyhood extends AppCompatActivity {
 
         listView = findViewById(R.id.listView);
         editText = findViewById(R.id.otherCaste);
+        formNumTxt = findViewById(R.id.formNumber);
 
         ArrayList<VoterData > voterData = getIntent().getParcelableArrayListExtra("voterdata");
         ArrayAdapter adapter = new ArrayAdapter<String>(this,
@@ -73,7 +75,7 @@ public class Livelyhood extends AppCompatActivity {
                 PollFirstDataBase pollFirstDataBase = PollFirstDataBase.getInstance(Livelyhood.this);
                 ArrayList<VoterListData> voterData = getIntent().getParcelableArrayListExtra("voterdata");
                 for (int i = 0; i < voterData.size(); i++) {
-                    List<VoterListData> voterDetails = pollFirstDataBase.pollFirstDao().getVoterDetails(voterData.get(i).Voter_ID);
+                    List<VoterListData> voterDetails = pollFirstDataBase.pollFirstDao().getVoterDetails(getIntent().getStringExtra("EPIC_NO"));
                     AppExecutors.getInstance().mainThread().execute(new Runnable() {
                         @Override
                         public void run() {
@@ -104,7 +106,7 @@ public class Livelyhood extends AppCompatActivity {
     }
     public void forwardPressed (View view){
         try {
-            if (community.equals("")) {
+            if (community.equals("") || formNumTxt.getText().toString().equals("")) {
                 Toast.makeText(Livelyhood.this,"Select Livelihood",Toast.LENGTH_SHORT).show();
                 return;
             }
@@ -118,10 +120,11 @@ public class Livelyhood extends AppCompatActivity {
                 public void run() {
                     try {
                         PollFirstDataBase pollFirstDataBase = PollFirstDataBase.getInstance(Livelyhood.this);
-                        pollFirstDataBase.pollFirstDao().updateVoterDetail(jsonObject.getString("Family_Head"),jsonObject.getString("Social_Group"),jsonObject.getString("Caste"),jsonObject.getString("Ration_Card"),jsonObject.getString("Land_Holding"),jsonObject.getString("Political_Affinity"),jsonObject.getString("Source_Livelihood"),jsonObject.getString("C_HOUSE_NO"),"completed",jsonObject.getString("Vehicle"));
+                        pollFirstDataBase.pollFirstDao().updateVoterIndividual(jsonObject.getString("Voter_Place"),jsonObject.getString("Current_Residence"),jsonObject.getString("Voter_DOB"),jsonObject.getString("Voter_Anniversary"),jsonObject.getString("Voter_Mobile"),jsonObject.getString("Voter_EDU"),jsonObject.getString("Voter_OCCU"),jsonObject.getString("EPIC_NO"),jsonObject.getString("Social_Group"),jsonObject.getString("Caste"),jsonObject.getString("Ration_Card"),jsonObject.getString("Land_Holding"),jsonObject.getString("Political_Affinity"),jsonObject.getString("Source_Livelihood"),"completed",jsonObject.getString("Vehicle"),sharedPreferences.getString("acno","")+"_"+sharedPreferences.getString("booth_no","")+"_"+formNumTxt.getText().toString());
                         Intent intent = new Intent(Livelyhood.this, VoterDetails.class);
                         intent.putExtra("voterlist",getIntent().getStringArrayListExtra("voterlist"));
                         intent.putExtra("voterdata",getIntent().getParcelableArrayListExtra("voterdata"));
+                        intent.putExtra("EPIC_NO",getIntent().getStringExtra("EPIC_NO"));
                         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
                         startActivity(intent);
                         Livelyhood.this.finish();

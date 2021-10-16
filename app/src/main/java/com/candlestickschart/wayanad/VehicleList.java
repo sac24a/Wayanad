@@ -68,7 +68,7 @@ public class VehicleList extends AppCompatActivity {
                 PollFirstDataBase pollFirstDataBase = PollFirstDataBase.getInstance(VehicleList.this);
                 ArrayList<VoterListData> voterData = getIntent().getParcelableArrayListExtra("voterdata");
                 for (int i = 0; i < voterData.size(); i++) {
-                    List<VoterListData> voterDetails = pollFirstDataBase.pollFirstDao().getVoterDetails(voterData.get(i).Voter_ID);
+                    List<VoterListData> voterDetails = pollFirstDataBase.pollFirstDao().getVoterDetails(getIntent().getStringExtra("EPIC_NO"));
                     AppExecutors.getInstance().mainThread().execute(new Runnable() {
                         @Override
                         public void run() {
@@ -108,6 +108,7 @@ public class VehicleList extends AppCompatActivity {
             intent.putExtra("voterlist",getIntent().getStringArrayListExtra("voterlist"));
             intent.putExtra("voterdata",getIntent().getParcelableArrayListExtra("voterdata"));
             intent.putExtra("json",jsonObject.toString());
+            intent.putExtra("EPIC_NO",getIntent().getStringExtra("EPIC_NO"));
             startActivity(intent);
         } catch (JSONException e) {
             e.printStackTrace();
