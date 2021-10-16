@@ -107,20 +107,39 @@ public class SearchVoter extends AppCompatActivity {
 
     }
 
+//    public void getDetails(String value) {
+//        AppExecutors.getInstance().diskIO().execute(new Runnable() {
+//            @Override
+//            public void run() {
+//                PollFirstDataBase pollFirstDataBase = PollFirstDataBase.getInstance(SearchVoter.this);
+//                String houseNo = pollFirstDataBase.pollFirstDao().searchVoterList(value);
+//                List<VoterListData> familyList = pollFirstDataBase.pollFirstDao().searchVoterFamilyList(houseNo);
+//                ArrayList<String> name = new ArrayList<>();
+//                for (int i =0;i<familyList.size();i++) {
+//                    name.add(familyList.get(i).SNo+"."+familyList.get(i).Voter_name+" - "+familyList.get(i).Sex+" ("+familyList.get(i).Age+")"+" - "+familyList.get(i).HouseNoEn);
+//                }
+//                Log.d("TAG", "run: "+familyList.size());
+//                Intent intent = new Intent(SearchVoter.this,VoterDetails.class);
+//                intent.putParcelableArrayListExtra("voterdata", (ArrayList<? extends Parcelable>) familyList);
+//                intent.putStringArrayListExtra("voterlist", name);
+//                startActivity(intent);
+//            }
+//        });
+//    }
+
     public void getDetails(String value) {
         AppExecutors.getInstance().diskIO().execute(new Runnable() {
             @Override
             public void run() {
                 PollFirstDataBase pollFirstDataBase = PollFirstDataBase.getInstance(SearchVoter.this);
-                String houseNo = pollFirstDataBase.pollFirstDao().searchVoterList(value);
-                List<VoterListData> familyList = pollFirstDataBase.pollFirstDao().searchVoterFamilyList(houseNo);
+                List<VoterListData> voterListDataList= pollFirstDataBase.pollFirstDao().searchVoterListByName(value);
+//                List<VoterListData> familyList = pollFirstDataBase.pollFirstDao().searchVoterFamilyList(houseNo);
                 ArrayList<String> name = new ArrayList<>();
-                for (int i =0;i<familyList.size();i++) {
-                    name.add(familyList.get(i).SNo+"."+familyList.get(i).Voter_name+" - "+familyList.get(i).Sex+" ("+familyList.get(i).Age+")"+" - "+familyList.get(i).HouseNoEn);
+                for (int i =0;i<voterListDataList.size();i++) {
+                    name.add(voterListDataList.get(i).SNo+"."+voterListDataList.get(i).Voter_name+" - "+voterListDataList.get(i).Sex+" ("+voterListDataList.get(i).Age+")"+" - "+voterListDataList.get(i).HouseNoEn);
                 }
-                Log.d("TAG", "run: "+familyList.size());
-                Intent intent = new Intent(SearchVoter.this,VoterDetails.class);
-                intent.putParcelableArrayListExtra("voterdata", (ArrayList<? extends Parcelable>) familyList);
+                Intent intent = new Intent(SearchVoter.this,SearchByNameList.class);
+                intent.putParcelableArrayListExtra("voterdata", (ArrayList<? extends Parcelable>) voterListDataList);
                 intent.putStringArrayListExtra("voterlist", name);
                 startActivity(intent);
             }

@@ -20,7 +20,7 @@ public interface PollFirstDao {
     @Query("Select Fam_ID from voterlist WHERE SNo = :value")
     String searchVoterList(String value);
 
-    @Query("Select * from voterlist WHERE Voter_name = :value")
+    @Query("Select * from voterlist WHERE Voter_name LIKE '%' || :value || '%'")
     List<VoterListData> searchVoterListByName(String value);
 
     @Query("Select * from voterlist WHERE Fam_ID = :value")
