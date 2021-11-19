@@ -34,13 +34,41 @@
                     android:layout_marginTop="20dp"
                     android:gravity="center"
                     />
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="40dp"
+                    android:orientation="horizontal"
+                    android:layout_marginLeft="30dp"
+                    android:layout_marginRight="30dp"
+                    android:layout_marginTop="20dp"
+                    android:background="@drawable/buttonborder">
+                    <Button
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:background="@drawable/newsample"
+                        android:text="Search By Name"
+                        android:textColor="#FFFFFF"
+                        android:textAllCaps="false"
+                        android:id="@+id/byName"/>
+                    <Button
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:text="Search By S.No."
+                        android:textColor="#000000"
+                        android:textAllCaps="false"
+                        android:background="@null"
+                        android:id="@+id/byNumber"
+                        />
+                </LinearLayout>
                 <EditText
                     android:layout_width="match_parent"
                     android:layout_height="40dp"
                     android:id="@+id/searchString"
                     android:hint="@string/searchVoterEdittext"
                     android:gravity="center"
-                    android:layout_marginTop="30dp"
+                    android:layout_marginTop="10dp"
                     android:layout_marginLeft="30dp"
                     android:text=""
                     android:layout_marginRight="30dp"

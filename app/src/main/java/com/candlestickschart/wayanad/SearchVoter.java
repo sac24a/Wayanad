@@ -6,6 +6,7 @@ import androidx.databinding.DataBindingUtil;
 import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.os.Parcelable;
 import android.util.Log;
@@ -48,8 +49,11 @@ public class SearchVoter extends AppCompatActivity {
     Button searchButton;
     Button uploadButton;
     Button logoutButton;
+    Button byName;
+    Button byNumber;
     ProgressBar progressBar;
     SharedPreferences.Editor editor;
+    int buttonid = 0;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -64,12 +68,42 @@ public class SearchVoter extends AppCompatActivity {
         logoutButton = findViewById(R.id.logout);
         searchText = findViewById(R.id.searchString);
         progressBar = findViewById(R.id.progressBar);
+        byName = findViewById(R.id.byName);
+        byNumber = findViewById(R.id.byNumber);
+
+        byName.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                byName.setBackgroundResource(R.drawable.newsample);
+                byNumber.setBackgroundResource(R.drawable.transparent);
+                byNumber.setTextColor(getApplicationContext().getResources().getColor(R.color.black));
+                byName.setTextColor(getApplicationContext().getResources().getColor(R.color.white));
+                buttonid = 0;
+            }
+        });
+        byNumber.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                byName.setBackgroundResource(R.drawable.transparent);
+                byName.setTextColor(getApplicationContext().getResources().getColor(R.color.black));
+                byNumber.setTextColor(getApplicationContext().getResources().getColor(R.color.white));
+                byNumber.setBackgroundResource(R.drawable.newsample);
+                buttonid = 1;
+            }
+        });
 
         searchButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                editor.putString("search",searchText.getText().toString());
-                getDetails(searchText.getText().toString());
+                if (buttonid == 0) {
+                    editor.putString("search",searchText.getText().toString());
+                    getDetails(searchText.getText().toString());
+                }
+                else if (buttonid ==1) {
+                    editor.putString("search",searchText.getText().toString());
+                    getDetailsByNumber(searchText.getText().toString());
+                }
+
             }
         });
         uploadButton.setOnClickListener(new View.OnClickListener() {
@@ -107,25 +141,25 @@ public class SearchVoter extends AppCompatActivity {
 
     }
 
-//    public void getDetails(String value) {
-//        AppExecutors.getInstance().diskIO().execute(new Runnable() {
-//            @Override
-//            public void run() {
-//                PollFirstDataBase pollFirstDataBase = PollFirstDataBase.getInstance(SearchVoter.this);
-//                String houseNo = pollFirstDataBase.pollFirstDao().searchVoterList(value);
-//                List<VoterListData> familyList = pollFirstDataBase.pollFirstDao().searchVoterFamilyList(houseNo);
-//                ArrayList<String> name = new ArrayList<>();
-//                for (int i =0;i<familyList.size();i++) {
-//                    name.add(familyList.get(i).SNo+"."+familyList.get(i).Voter_name+" - "+familyList.get(i).Sex+" ("+familyList.get(i).Age+")"+" - "+familyList.get(i).HouseNoEn);
-//                }
-//                Log.d("TAG", "run: "+familyList.size());
-//                Intent intent = new Intent(SearchVoter.this,VoterDetails.class);
-//                intent.putParcelableArrayListExtra("voterdata", (ArrayList<? extends Parcelable>) familyList);
-//                intent.putStringArrayListExtra("voterlist", name);
-//                startActivity(intent);
-//            }
-//        });
-//    }
+    public void getDetailsByNumber(String value) {
+        AppExecutors.getInstance().diskIO().execute(new Runnable() {
+            @Override
+            public void run() {
+                PollFirstDataBase pollFirstDataBase = PollFirstDataBase.getInstance(SearchVoter.this);
+                String houseNo = pollFirstDataBase.pollFirstDao().searchVoterList(value);
+                List<VoterListData> familyList = pollFirstDataBase.pollFirstDao().searchVoterFamilyList(houseNo);
+                ArrayList<String> name = new ArrayList<>();
+                for (int i =0;i<familyList.size();i++) {
+                    name.add(familyList.get(i).SNo+"."+familyList.get(i).Voter_name+" - "+familyList.get(i).Sex+" ("+familyList.get(i).Age+")"+" - "+familyList.get(i).HouseNoEn);
+                }
+                Log.d("TAG", "run: "+familyList.size());
+                Intent intent = new Intent(SearchVoter.this,VoterDetails.class);
+                intent.putParcelableArrayListExtra("voterdata", (ArrayList<? extends Parcelable>) familyList);
+                intent.putStringArrayListExtra("voterlist", name);
+                startActivity(intent);
+            }
+        });
+    }
 
     public void getDetails(String value) {
         AppExecutors.getInstance().diskIO().execute(new Runnable() {
