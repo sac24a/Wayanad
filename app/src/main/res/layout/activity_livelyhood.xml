@@ -17,6 +17,19 @@
         <include layout="@layout/header"
             android:id="@+id/top"
             bind:username="@{mainUser}"/>
+
+        <EditText
+            android:id="@+id/formNumber"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:layout_below="@id/top"
+            android:layout_marginLeft="20dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginRight="20dp"
+            android:layout_marginBottom="10dp"
+            android:background="@drawable/edit_bg"
+            android:hint="Serial No of the Head of Family"
+            android:paddingLeft="20dp" />
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -29,26 +42,15 @@
             android:layout_marginRight="20dp"
             android:gravity="center"
             android:id="@+id/topText"
-            android:layout_below="@id/top"
+            android:layout_below="@id/formNumber"
             />
-        <EditText
-            android:layout_width="match_parent"
-            android:layout_height="40dp"
-            android:layout_marginLeft="20dp"
-            android:layout_marginRight="20dp"
-            android:hint="Enter form number"
-            android:background="@drawable/edit_bg"
-            android:layout_marginTop="10dp"
-            android:layout_marginBottom="10dp"
-            android:layout_below="@id/topText"
-            android:paddingLeft="20dp"
-            android:id="@+id/formNumber"
-            />
+
+
         <ListView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:id="@+id/listView"
-            android:layout_below="@id/formNumber"
+            android:layout_below="@id/topText"
             android:layout_above="@id/otherCaste"
             android:layout_marginTop="20dp"/>
         <EditText

@@ -99,7 +99,12 @@
                     android:paddingLeft="20dp"
                     android:id="@+id/currentResidence"
                     />
-
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="20dp"
+                    android:text="Date of Birth"
+                    />
                 <EditText
                     android:layout_width="match_parent"
                     android:layout_height="40dp"
@@ -164,6 +169,13 @@
                     android:id="@+id/anniversary"
                     android:visibility="gone"
                     />
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="20dp"
+                    android:text="Mobile Number"
+                    android:layout_marginTop="10dp"
+                    />
                 <EditText
                     android:layout_width="match_parent"
                     android:layout_height="40dp"
@@ -186,6 +198,13 @@
                     android:background="@drawable/edit_bg"
                     android:id="@+id/sameWhatsapp"
                     android:text="same"/>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="20dp"
+                    android:text="Whatsapp Number"
+                    android:layout_marginTop="10dp"
+                    />
                 <EditText
                     android:layout_width="match_parent"
                     android:layout_height="40dp"

@@ -207,7 +207,7 @@
     <string name="residenceButton1">Yes</string>
 
     <string name="residenceButton2">No</string>
-    <string name="residence">Current Residence</string>
+    <string name="residence">Where is the voter presently living?</string>
     <string name="residenceDOB">Date of Birth</string>
     <string name="residenceAnni">Anniversary(if Married)</string>
 
